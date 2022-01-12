@@ -81,7 +81,7 @@ cd $SLURM_SUBMIT_DIR # Brings the shell into the directory from which you’ve s
 #   run on your computer.
 #
 # >> CDMFT-Workflow
-matlab -batch MITline_autostep
+matlab -batch autostep
 #
 #
 # ==== END OF JOB COMMANDS ===== #

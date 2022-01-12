@@ -79,26 +79,6 @@ chrono = toc;
 file_id = fopen('LOG_time.txt','w');
 fprintf(file_id,'%f\n', chrono);		      % Write on time-log
 fclose(file_id);
-%% LAST LOOP [Evaluates the RDMs]
-outLOG_last = ' > LOG_lastloop.txt';
-last_loop_call = [cdmft_setup,' Nloop=1 DM_FLAG=T ',outLOG_last];
-% .restart -> .restart_original
-restartpack = dir([pwd, '/*.restart']);
-for i = 1:numel(restartpack)
-   file = fullfile(pwd, fileList(i).name);
-   [tempDir, tempFile] = fileparts(file); 
-   copyfile(file, fullfile(tempDir, [tempFile, '.restart_original']));
-   delete(file);
-end
-% .used -> .restart
-usedpack = dir([pwd, '/*.used']);
-for i = 1:numel(usedpack)
-   file = fullfile(pwd, fileList(i).name);
-   [tempDir, tempFile] = fileparts(file); 
-   copyfile(file, fullfile(tempDir, [tempFile, '.restart']));
-end
-% Last LOOP call
-system(last_loop_call);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% HERE WE CATCH A FAILED (unconverged) CDMFT LOOP
 if isfile('ERROR.README')
@@ -109,6 +89,29 @@ else
     fprintf(Ulist,'%f\n', U);	               % Write on U-log
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LAST LOOP [Evaluates the RDMs]
+outLOG_last = ' > LOG_lastloop.txt';
+last_loop_call = [cdmft_setup,' Nloop=1 DM_FLAG=T ',outLOG_last];
+% .restart -> .restart_original
+restartpack = dir([pwd, '/*.restart']);
+for i = 1:numel(restartpack)
+   file = fullfile(pwd, restartpack(i).name);
+   [tempDir, tempFile] = fileparts(file); 
+   copyfile(file, fullfile(tempDir, [tempFile, '.restart_original']));
+   delete(file);
+end
+% .used -> .restart
+usedpack = dir([pwd, '/*.used']);
+for i = 1:numel(usedpack)
+   file = fullfile(pwd, usedpack(i).name);
+   [tempDir, tempFile] = fileparts(file); 
+   copyfile(file, fullfile(tempDir, [tempFile, '.restart']));
+end
+% Last LOOP call
+system(last_loop_call);
+delete('ERROR.README');
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 cd ..                                        % Exit the U-folder
 
