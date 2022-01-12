@@ -68,7 +68,7 @@ else						      % boolean flag...
 mpi = [];
 end
 HUBBARD =sprintf(' uloc=%f',U);		      % OVERRIDE
-NBATH =sprintf(' nbath=%f',Nbath);			% of
+NBATH =sprintf(' nbath=%d',Nbath);			% of
 MIXING = sprintf(' wmixing=%f',Wmix);		% PARAMETERS
 outLOG = ' > LOG_cdmft.txt';
 cdmft_setup = [mpi,driver,HUBBARD,NBATH,MIXING];
