@@ -10,7 +10,6 @@
 *.used
 used.*
 *.txt
-*.conf
 *.nint.*
 
 # Test folders
