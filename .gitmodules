@@ -2,14 +2,14 @@
 	path = lib/dmft-lab
 	url = https://github.com/bellomia/DMFT-LAB
 [submodule "lib/qcmp-lab/dmft-tools"]
-	path = lib/qcmp-lab/dmft-tools
+	path = lib/dmft-tools
 	url = https://github.com/QcmPlab/DMFTtools
 [submodule "lib/qcmp-lab/dmft-ed"]
-	path = lib/qcmp-lab/dmft-ed
+	path = lib/dmft-ed
 	url = https://github.com/QcmPlab/LIB_DMFT_ED
 [submodule "lib/qcmp-lab/cdmft-ed"]
-	path = lib/qcmp-lab/cdmft-ed
+	path = lib/cdmft-ed
 	url = https://github.com/QcmPlab/CDMFT-LANC-ED
 [submodule "lib/qcmp-lab/scifor"]
-	path = lib/qcmp-lab/scifor
+	path = lib/scifor
 	url = https://github.com/QcmPlab/SciFortran
