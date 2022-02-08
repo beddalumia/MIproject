@@ -1,15 +1,15 @@
 [submodule "lib/dmft-lab"]
-	path = lib/dmft-lab
+	path = dependencies/dmft-lab
 	url = https://github.com/bellomia/DMFT-LAB
 [submodule "lib/qcmp-lab/dmft-tools"]
-	path = lib/dmft-tools
+	path = dependencies/dmft-tools
 	url = https://github.com/QcmPlab/DMFTtools
 [submodule "lib/qcmp-lab/dmft-ed"]
-	path = lib/dmft-ed
+	path = dependencies/dmft-ed
 	url = https://github.com/QcmPlab/LIB_DMFT_ED
 [submodule "lib/qcmp-lab/cdmft-ed"]
-	path = lib/cdmft-ed
+	path = dependencies/cdmft-ed
 	url = https://github.com/QcmPlab/CDMFT-LANC-ED
 [submodule "lib/qcmp-lab/scifor"]
-	path = lib/scifor
+	path = dependencies/scifor
 	url = https://github.com/QcmPlab/SciFortran
