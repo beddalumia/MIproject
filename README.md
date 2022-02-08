@@ -6,11 +6,11 @@ The project relies on several inter-dependent[^1] external libraries:
 
 [^1]: **Please build them in the exact order reported here.** More specifically: DMFT-tools depends on SciFortran, DMFT-ED depends on SciFortran, CDMFT-ED depends on both SciFortran and DMFT-tools. DMFT-LAB depends on everything.
 
-- [SciFortran](dependencies/scifor)
-- [DMFT-tools](dependencies/dmft-tools)
-- [DMFT-ED](dependencies/dmft-ed)
-- [CDMFT-ED](dependencies/cdmft-ed)
-- [DMFT-LAB](dependencies/dmft-lab)
+- [SciFortran](lib/scifor)
+- [DMFT-tools](lib/dmft-tools)
+- [DMFT-ED](lib/dmft-ed)
+- [CDMFT-ED](lib/cdmft-ed)
+- [DMFT-LAB](lib/dmft-lab)
 
 These dependencies are handled through git-submodule embedding. To clone the project shipping also all the correct versions of such libraries, just run:
 
