@@ -49,11 +49,11 @@ notConvThreshold = NUstep-1;     % Maximum #{times} we accept CDMFT to fail
 U = Umin; Uold = -1;
 while U <= Umax                % Hubbard loop ~~~~~~~~~~~~~~~~~~~~~~~~~~~~>
 
-UDIR= sprintf('U%f',U);       % Make a folder named 'U=...', where '...'
+UDIR= sprintf('U=%f',U);       % Make a folder named 'U=...', where '...'
 mkdir(UDIR);                   % is the given value for Hubbard interaction
 cd(UDIR);                      % Enter the U-folder
 
-oldDIR=sprintf('../U%f',Uold);      % ------------------------------------
+oldDIR=sprintf('../U=%f',Uold);      % ------------------------------------
 if isfolder(oldDIR)                  % If it exist a "previous" folder: 
 restartpack = [oldDIR,'/*.restart']; % Copy all the restart files from the
 copyfile(restartpack);               % last cdmft evaluation...
