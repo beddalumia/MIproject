@@ -6,21 +6,25 @@
 # ---- Metadata configuration ----
 #
 #SBATCH --job-name=MIT.dmft                 # The name of your job, you'll se it in squeue.
-#SBATCH --mail-type=END,FAIL                # Mail events (NONE, BEGIN, END, FAIL, ALL). Sends you an email when the job begins, ends, or fails; you can combine options.
+#SBATCH --mail-type=ALL,TIME_LIMIT_50       # Mail events (ALL=BEGIN,END,FAIL,INVALID_DEPEND,REQUEUE,STAGE_OUT: TIME_LIMIT_50=50%TIME_LIMIT). 
 #SBATCH --mail-user=gbellomi@sissa.it       # Where to send the mail
 #
-# ---- CPU resources configuration  ----    |  Clarifications at https://slurm.schedmd.com/mc_support.html
+# ---- CPU resources configuration  ----
+# > Clarifications at https://slurm.schedmd.com/mc_support.html 
+# > but be aware of Ulysses MPI idiosyncrasies: https://www.itcs.sissa.it/services/computing/hpc  
 #
 #SBATCH --cpus-per-task=40                  # Number of threads per MPI rank (MAX: 2x32 cores on _partition_2, 2x20 cores on _partition_1) 
-#SBATCH --nodes=1                           # Number of nodes
+#SBATCH --nodes=1                           # Total number of requested nodes (==ntasks if cpus-per-task is set to max)
+#SBATCH --ntasks-per-node=1                 # Set to 1 to be sure that different tasks run on different nodes
+#SBATCH --ntasks-per-core=1                 # Set to 1 to be sure that different tasks run on different cores
 #
 # ---- Memory configuration ----
 #
-#SBATCH --mem=0                             # Memory per node (MAX: 63500 on the new ones, 40000 on the old ones); incompatible with --mem-per-cpu.
+#SBATCH --mem=0                             # Memory per node (=0 takes all the available)
 #
 # ---- Partition, Walltime and Output ----
 #
-#SBATCH --partition=regular1                # Partition (queue). Avail: regular1, regular2, long1, long2, wide1, wide2, gpu1, gpu2. Multiple partitions are possible.
+#SBATCH --partition=regular1                # Avail: regular1, regular2, long1, long2, wide1, wide2, gpu1, gpu2. Multiple partitions are possible.
 #SBATCH --time=12:00:00                     # Time limit hrs:min:sec
 #SBATCH --output=sLOG_%x_out%j.txt          # Standard output log -- WARNING: %x requires a new enough SLURM. Use %j for regular jobs and %A-%a for array jobs
 #SBATCH --error=sLOG_%x_err%j.txt           # Standard error  log -- WARNING: %x requires a new enough SLURM. Use %j for regular jobs and %A-%a for array jobs
@@ -35,25 +39,18 @@ module load mkl/19.1.3.304
 module load openmpi3/3.1.4
 module load matlab
 #
-# ---- QcmPlab stuff ----
-#
-#module load scifor/gnu
-#module load dmft_tools/gnu
-#module load dmft_ed/gnu
-#
-#
 # ==== Info part (say things) ===== #
 #
 # > DO NOT MODIFY. This part prints useful info on your output file.
 #
-NOW=`date +%H:%M-%a-%d/%b/%Y`
+START_TIME=`date +%H:%M-%a-%d/%b/%Y`
 echo '------------------------------------------------------'
 echo 'This job is allocated on '$SLURM_JOB_CPUS_PER_NODE' cpu(s)'
 echo 'Job is running on node(s): '
 echo  $SLURM_JOB_NODELIST
 echo '------------------------------------------------------'
 echo 'WORKINFO:'
-echo 'SLURM: job starting at           '$NOW
+echo 'SLURM: job starting at           '$START_TIME
 echo 'SLURM: sbatch is running on      '$SLURM_SUBMIT_HOST
 echo 'SLURM: executing on cluster      '$SLURM_CLUSTER_NAME
 echo 'SLURM: executing on partition    '$SLURM_JOB_PARTITION
@@ -80,9 +77,12 @@ cd $SLURM_SUBMIT_DIR # Brings the shell into the directory from which you’ve s
 #   Just fill this part as if it was a regular Bash script that you want to
 #   run on your computer.
 #
-# >> CDMFT-Workflow
-matlab -batch autostep
+# >> DMFT-Workflows (fill and uncomment)
+#matlab -batch "runDMFT.autostep_line('ed_hm_square',doMPI,Uold,Umin,Umax)"
+matlab -batch "runDMFT.autostep_line('ed_hm_square',true,-1,0,10)"
 #
+# >> CDMFT-Workflow
+#matlab -batch autostep
 #
 # ==== END OF JOB COMMANDS ===== #
 #
