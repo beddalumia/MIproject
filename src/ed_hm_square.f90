@@ -20,8 +20,8 @@ program ed_hm_square
   complex(8),allocatable,dimension(:,:,:,:,:)   :: Weiss,Weiss_
   complex(8),allocatable,dimension(:,:,:,:,:,:) :: Gkmats
   complex(8),allocatable,dimension(:)           :: Gtest
-  !Luttinger invariants:
-  real(8),allocatable                           :: luttinger(:)
+  !MIT markers
+  real(8),allocatable                           :: entropy(:),luttinger(:)
   !
   character(len=16)                             :: finput,foutput
   complex(8),allocatable                        :: Hk(:,:,:)
@@ -35,13 +35,13 @@ program ed_hm_square
   rank = get_Rank_MPI(comm)
   master = get_Master_MPI(comm)
 
-  call parse_cmd_variable(finput,"FINPUT",default='inputHM.in')
-  call parse_input_variable(wmixing,"wmixing",finput,default=0.5d0,comment="Mixing bath parameter")
-  call parse_input_variable(ts,"TS",finput,default=[0.25d0,0d0,0d0,0d0,0d0],comment="hopping parameter")
-  call parse_input_variable(Dband,"Dband",finput,default=[0d0,0d0,0d0,0d0,0d0],comment="cystal field splittig (bands shift)")
+  call parse_cmd_variable(finput,"FINPUT",default='inputHM.conf')
+  call parse_input_variable(wmixing,"wmixing",finput,default=0.5d0,comment="Mixing parameter")
+  call parse_input_variable(ts,"TS",finput,default=[0.25d0,0d0,0d0,0d0,0d0],comment="Hopping parameter (4ts=D)")
+  call parse_input_variable(Dband,"Dband",finput,default=[0d0,0d0,0d0,0d0,0d0],comment="Crystal field splittig (bands shift)")
   call parse_input_variable(Nx,"Nx",finput,default=100,comment="Number of kx point for 2d BZ integration")
-  call parse_input_variable(mixG0,"mixG0",finput,default=.false.)
-  call parse_input_variable(symOrbs,"symOrbs",finput,default=.false.)
+  call parse_input_variable(mixG0,"mixG0",finput,default=.false.,comment="T mixes the Weiss field, F mixes the bath (default behavior)")
+  call parse_input_variable(symOrbs,"symOrbs",finput,default=.false.,comment="T imposes same bath for all orbitals, reading from the first one")
   !
   call ed_read_input(trim(finput),comm)
   !
@@ -97,6 +97,14 @@ program ed_hm_square
      call ed_solve(comm,bath,Hloc) 
      call ed_get_sigma_matsubara(Smats)
      call ed_get_sigma_realaxis(Sreal)
+     
+     !Compute the local entanglement entropy
+     if(master)then
+        allocate(entropy(Norb))
+        call ed_local_ee(entropy)
+        call print_local_ee(entropy)
+        deallocate(entropy)
+     endif
 
      !Compute the local gfs on the imaginary axis:
      call dmft_gloc_matsubara(Hk,Gmats,Smats)
@@ -229,11 +237,67 @@ contains
     !
   end subroutine print_luttinger
 
+  !+---------------------------------------------------------------------------+
+  !PURPOSE : build the local ee according to Eq.4 in Mod.Phys.Lett.B.2013.27:05
+  !+---------------------------------------------------------------------------+
+  subroutine ed_local_ee(EE)
+    real(8),allocatable,dimension(:),intent(inout) :: EE
+    real(8),allocatable,dimension(:)               :: pp
+    real(8),allocatable,dimension(:)               :: dens_up,dens_dw,mag
+    real(8),allocatable,dimension(:)               :: dens,docc
+    integer                                        :: i
+    !
+    if(Norb>1)then
+       write(LOGfile,*) "WARNING: for Norb>1 ed_local_ee traces down to single orbitals."
+    endif
+       !
+    allocate(dens(Norb),dens_up(Norb),dens_dw(Norb),docc(Norb),mag(Norb))
+    allocate(pp(4**Norb))
+    !
+    call ed_get_mag(mag)
+    call ed_get_dens(dens)
+    call ed_get_docc(docc)
+    dens_up = 0.5d0*(dens + mag)
+    dens_dw = 0.5d0*(dens - mag)
+    !
+    do i=1,Norb
+       pp(1) = abs(1-dens_up(i)-dens_dw(i)+docc(i))
+       pp(2) = abs(dens_up(i)-docc(i))
+       pp(3) = abs(dens_dw(i)-docc(i))
+       pp(4) = abs(docc(i))
+       EE(i) = -sum(pp*log(pp)/log(2d0))
+    enddo
+    !
+  end subroutine ed_local_ee
 
+  !+---------------------------------------------------------------------------+
+  !PURPOSE : print to file (and stdout) the entanglement entropies EE(Norb)
+  !+---------------------------------------------------------------------------+
+  subroutine print_local_ee(EE)
+    real(8),allocatable,dimension(:),intent(in)  :: EE
+    integer                                      :: iorb
+    integer                                      :: unit
+    !
+    if(ed_verbose>0)then
+       write(LOGfile,*) " "
+       write(LOGfile,*) "Entanglement entropies:"
+    endif
+    !
+    do iorb=1,Norb
+       if(ed_verbose>0) write(LOGfile,*) iorb, EE(iorb)
+       unit = free_unit()
+       foutput = "eentropy_l"//str(iorb)//".dat"
+       open(unit,file=foutput,action="write",position="rewind",status='unknown')
+       write(unit,*) iorb, EE(iorb)
+       close(unit)
+    enddo
+    !
+    if(ed_verbose>0)then
+       write(LOGfile,*) "          iorb        EE"
+       write(LOGfile,*) " "
+    endif
+    !
+  end subroutine print_local_ee
 
 end program ed_hm_square
-
-
-
-
 
