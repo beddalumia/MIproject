@@ -4,7 +4,7 @@ A collection of programs and scripts to solve and analyze the Mott-Hubbard trans
 ## Requirements
 The project relies on several inter-dependent[^1] external libraries:
 
-[^1]: **Please build them in the exact order reported here.** More specifically: DMFT-tools depends on SciFortran, DMFT-ED depends on SciFortran, CDMFT-ED depends on both SciFortran and DMFT-tools. DMFT-LAB depends on everything.
+[^1]: More specifically: DMFT-tools depends on SciFortran, DMFT-ED depends on SciFortran, CDMFT-ED depends on both SciFortran and DMFT-tools. DMFT-LAB strictly depends on nothing but a working installation of MATLAB / GNU OCTAVE, but its whole purpose is to manage the runtime and post-processing workflows for DMFT-ED and CDMFT-ED executables so, in a sense, it depends on eveything.
 
 - [SciFortran](lib/scifor)
 - [DMFT-tools](lib/dmft-tools)
@@ -12,7 +12,7 @@ The project relies on several inter-dependent[^1] external libraries:
 - [CDMFT-ED](lib/cdmft-ed)
 - [DMFT-LAB](lib/dmft-lab)
 
-These dependencies are handled through git-submodule embedding. To clone the project shipping also all the correct versions of such libraries, just run:
+These dependencies are [embedded](./lib/) through [git submodule tools](https://git-scm.com/book/en/v2/Git-Tools-Submodules). To download the project with all the intended versions of such libraries, just run:
 
 ```
 git clone --recursive https://github.com/bellomia/MIproject.git MIproject
@@ -30,7 +30,5 @@ To update instead all the submodules, use the `foreach` command:
 git submodule foreach `git pull origin`
 git submodule update
 ```
-
-Complete documentation of the `git submodule` tools can be found [here](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
 
 **Warning:** The build and installation of the libraries is not automatized (yet?), thus you will need to enter each submodule directory and follow the provided instructions. All the upstream requirements have to be met, even the "optional" ones (e.g. MPI related stuff).
