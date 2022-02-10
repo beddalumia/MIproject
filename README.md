@@ -21,7 +21,7 @@ git clone --recursive https://github.com/bellomia/MIproject.git MIproject
 To pull upstream changes of one of the submodules you can run:
 
 ```
-git submodule update --remote --merge <submodule-name>
+git submodule update --remote --merge <path/to/submodule>
 ```
 
 To update instead all the submodules, use the `foreach` command:
