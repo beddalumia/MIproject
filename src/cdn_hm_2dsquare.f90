@@ -568,7 +568,7 @@ contains
                unit = free_unit()
                foutput = "luttinger_site00"//str(ilat)//"_l"//str(iorb)//"_s"//str(ispin)//".dat"
                open(unit,file=foutput,action="write",position="rewind",status='unknown')
-               write(unit,*) ilat, iorb, ispin, IL(ilat,ispin,iorb)
+               write(unit,*) IL(ilat,ispin,iorb)
                close(unit)
             enddo
          enddo

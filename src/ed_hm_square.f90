@@ -226,7 +226,7 @@ contains
        unit = free_unit()
        foutput = "luttinger_l"//str(iorb)//".dat"
        open(unit,file=foutput,action="write",position="rewind",status='unknown')
-       write(unit,*) iorb, IL(iorb)
+       write(unit,*) IL(iorb)
        close(unit)
     enddo
     !
@@ -288,7 +288,7 @@ contains
        unit = free_unit()
        foutput = "eentropy_l"//str(iorb)//".dat"
        open(unit,file=foutput,action="write",position="rewind",status='unknown')
-       write(unit,*) iorb, EE(iorb)
+       write(unit,*) EE(iorb)
        close(unit)
     enddo
     !
