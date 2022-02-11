@@ -18,17 +18,10 @@ These dependencies are [embedded](./lib/) through [git submodule tools](https://
 git clone --recursive https://github.com/bellomia/MIproject.git MIproject
 ```
 
-To pull upstream changes of one of the submodules you can run:
+To pull upstream changes you can run:
 
 ```
-git submodule update --remote --merge <path/to/submodule>
-```
-
-To update instead all the submodules, use the `foreach` command:
-
-```
-git submodule foreach `git pull origin`
-git submodule update
+git submodule update --remote --merge
 ```
 
 **Warning:** The build and installation of the libraries is not automatized (yet?), thus you will need to enter each submodule directory and follow the provided instructions. All the upstream requirements have to be met, even the "optional" ones (e.g. MPI related stuff).
