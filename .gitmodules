@@ -1,3 +1,6 @@
+[submodule "lib/dmft-ipt"]
+	path = lib/dmft-ipt
+	url = https://github.com/bellomia/MOTTlab.git
 [submodule "lib/dmft-lab"]
 	path = lib/dmft-lab
 	url = https://github.com/bellomia/DMFT-LAB
