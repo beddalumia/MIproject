@@ -5,7 +5,7 @@
 #
 # ---- Metadata configuration ----
 #
-#SBATCH --job-name=MIT.dmft                 # The name of your job, you'll se it in squeue.
+#SBATCH --job-name=CDFMT.1sTEST             # The name of your job, you'll se it in squeue.
 #SBATCH --mail-type=ALL,TIME_LIMIT_50       # Mail events (ALL=BEGIN,END,FAIL,INVALID_DEPEND,REQUEUE,STAGE_OUT: TIME_LIMIT_50=50%TIME_LIMIT). 
 #SBATCH --mail-user=gbellomi@sissa.it       # Where to send the mail
 #
@@ -24,8 +24,8 @@
 #
 # ---- Partition, Walltime and Output ----
 #
-#SBATCH --partition=regular1                # Avail: regular1, regular2, long1, long2, wide1, wide2, gpu1, gpu2. Multiple partitions are possible.
-#SBATCH --time=12:00:00                     # Time limit hrs:min:sec
+#SBATCH --partition=long1                   # Avail: regular1, regular2, long1, long2, wide1, wide2, gpu1, gpu2. Multiple partitions are possible.
+#SBATCH --time=48:00:00                     # Time limit hrs:min:sec
 #SBATCH --output=sLOG_%x_out%j              # Standard output log -- WARNING: %x requires a new enough SLURM. Use %j for regular jobs and %A-%a for array jobs
 #SBATCH --error=sLOG_%x_err%j               # Standard error  log -- WARNING: %x requires a new enough SLURM. Use %j for regular jobs and %A-%a for array jobs
 #
@@ -37,7 +37,7 @@
 module load gnu8/8.3.0
 module load mkl/19.1.3.304
 module load openmpi3/3.1.4
-module load matlab
+module load matlab/2020b
 #
 # ==== Info part (say things) ===== #
 #
@@ -77,12 +77,14 @@ cd $SLURM_SUBMIT_DIR # Brings the shell into the directory from which you’ve s
 #   Just fill this part as if it was a regular Bash script that you want to
 #   run on your computer.
 #
-# >> DMFT-Workflows (fill and uncomment)
-#matlab -batch "runDMFT.autostep_line('ed_hm_square',doMPI,Uold,Umin,Umax)"
-matlab -batch "runDMFT.autostep_line('ed_hm_square',true,-1,0,10)"
+# >> Workflows (fill and uncomment)
+#matlab -batch "runDMFT.dry_line(EXE,doMPI,Uold,Ustart,Ustep,Ustop)"
+matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare',true,0.0,0.1,0.1,1.0)"
+matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare',true,0.9,1.0,0.2,2.6)"
+matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare',true,2.4,2.45,0.05,3)"
+matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare',true,2.9,3.1,0.1,4.1)"
+matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare',true,4.0,4.5,0.5,6.5)"
 #
-# >> CDMFT-Workflow
-#matlab -batch autostep
 #
 # ==== END OF JOB COMMANDS ===== #
 #
