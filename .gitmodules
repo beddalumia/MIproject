@@ -1,18 +1,18 @@
-[submodule "lib/dmft-ipt"]
+[submodule "dmft-ipt"]
 	path = lib/dmft-ipt
 	url = https://github.com/bellomia/MOTTlab.git
-[submodule "lib/dmft-lab"]
+[submodule "dmft-lab"]
 	path = lib/dmft-lab
 	url = https://github.com/bellomia/DMFT-LAB
-[submodule "lib/qcmp-lab/dmft-tools"]
+[submodule "dmft-tools"]
 	path = lib/dmft-tools
 	url = https://github.com/QcmPlab/DMFTtools
-[submodule "lib/qcmp-lab/dmft-ed"]
+[submodule "dmft-ed"]
 	path = lib/dmft-ed
 	url = https://github.com/QcmPlab/LIB_DMFT_ED
-[submodule "lib/qcmp-lab/cdmft-ed"]
+[submodule "cdmft-ed"]
 	path = lib/cdmft-ed
 	url = https://github.com/QcmPlab/CDMFT-LANC-ED
-[submodule "lib/qcmp-lab/scifor"]
+[submodule "scifor"]
 	path = lib/scifor
 	url = https://github.com/QcmPlab/SciFortran

@@ -37,7 +37,7 @@
 module load gnu8/8.3.0
 module load mkl/19.1.3.304
 module load openmpi3/3.1.4
-module load matlab/2020b
+module load matlab/2021a
 #
 # ==== Info part (say things) ===== #
 #
@@ -79,11 +79,24 @@ cd $SLURM_SUBMIT_DIR # Brings the shell into the directory from which you’ve s
 #
 # >> Workflows (fill and uncomment)
 #matlab -batch "runDMFT.dry_line(EXE,doMPI,Uold,Ustart,Ustep,Ustop)"
-matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare',true,0.0,0.1,0.1,1.0)"
-matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare',true,0.9,1.0,0.2,2.6)"
-matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare',true,2.4,2.45,0.05,3)"
-matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare',true,2.9,3.1,0.1,4.1)"
-matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare',true,4.0,4.5,0.5,6.5)"
+mkdir CDMFT
+cp inputHM2D.conf CDMFT/inputHM2D.conf
+cd CDMFT
+matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare_bath_overhaul',true,NaN,0.0,0.1,1.0)"
+matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare_bath_overhaul',true,0.9,1.0,0.2,2.6)"
+matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare_bath_overhaul',true,2.4,2.45,0.05,3)"
+matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare_bath_overhaul',true,2.9,3.1,0.1,4.1)"
+matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare_bath_overhaul',true,4.0,4.5,0.5,6.5)"
+cd ..
+mkdir DMFT
+cp inputHM.conf DMFT/inputHM.conf
+cd DMFT
+matlab -batch "runDMFT.dry_line('ed_hm_square',true,NaN,0.0,0.1,1.0)"
+matlab -batch "runDMFT.dry_line('ed_hm_square',true,0.9,1.0,0.2,2.6)"
+matlab -batch "runDMFT.dry_line('ed_hm_square',true,2.4,2.45,0.05,3)"
+matlab -batch "runDMFT.dry_line('ed_hm_square',true,2.9,3.1,0.1,4.1)"
+matlab -batch "runDMFT.dry_line('ed_hm_square',true,4.0,4.5,0.5,6.5)"
+cd ..
 #
 #
 # ==== END OF JOB COMMANDS ===== #
