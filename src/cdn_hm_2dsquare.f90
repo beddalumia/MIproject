@@ -94,7 +94,7 @@ program cdn_hm_2dsquare
    allocate(Hsym_basis(Nlat,Nlat,Nspin,Nspin,Norb,Norb,2))
    Hsym_basis(:,:,:,:,:,:,1) = lso2nnn(zeye(Nlso)) !Replica onsite energies
    Hsym_basis(:,:,:,:,:,:,2) = abs(lso2nnn(Hloc))  !Replica hopping amplitudes
-   write(*,*) "HWBAND="//str(hwband)
+   write(LOGfile,*) "HWBAND="//str(hwband)
    do irepl=1,Nbath
       onsite = irepl - 1 - (Nbath-1)/2d0      ![-(Nbath-1)/2:(Nbath-1)/2]
       onsite = onsite * 2*HWBAND/(Nbath-1)    !P-H symmetric band, -HWBAND:HWBAND
