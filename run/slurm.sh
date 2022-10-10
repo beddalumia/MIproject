@@ -13,9 +13,9 @@
 # > Clarifications at https://slurm.schedmd.com/mc_support.html 
 # > but be aware of Ulysses MPI idiosyncrasies: https://www.itcs.sissa.it/services/computing/hpc  
 #
-#SBATCH --nodes=1                           # Total number of requested nodes (==ntasks if cpus-per-task is set to max)
+#SBATCH --nodes=2                           # Total number of requested nodes (==ntasks if cpus-per-task is set to max)
 #SBATCH --hint=nomultithread                # Be sure we have just physical cores
-#SBATCH --ntasks-per-core=1                 # Set to 1 to be sure that different tasks run on different cores
+#SBATCH --ntasks-per-node=20                # Set to 1 to be sure that different tasks run on different cores
 #
 # ---- Memory configuration ----
 #
@@ -23,7 +23,7 @@
 #
 # ---- Partition, Walltime and Output ----
 #
-#SBATCH --partition=long1,long2             # Avail: regular1, regular2, long1, long2, wide1, wide2, gpu1, gpu2. Multiple partitions are possible.
+#SBATCH --partition=long1                   # Avail: regular1, regular2, long1, long2, wide1, wide2, gpu1, gpu2. Multiple partitions are possible.
 #SBATCH --time=48:00:00                     # Time limit hrs:min:sec
 #SBATCH --output=sLOG_%x_out%j              # Standard output log -- WARNING: %x requires a new enough SLURM. Use %j for regular jobs and %A-%a for array jobs
 #SBATCH --error=sLOG_%x_err%j               # Standard error  log -- WARNING: %x requires a new enough SLURM. Use %j for regular jobs and %A-%a for array jobs
