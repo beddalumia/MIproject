@@ -5,7 +5,7 @@
 #
 # ---- Metadata configuration ----
 #
-#SBATCH --job-name=CDFMT.1sTEST             # The name of your job, you'll se it in squeue.
+#SBATCH --job-name=HM.2s5r                  # The name of your job, you'll se it in squeue.
 #SBATCH --mail-type=ALL,TIME_LIMIT_50       # Mail events (ALL=BEGIN,END,FAIL,INVALID_DEPEND,REQUEUE,STAGE_OUT: TIME_LIMIT_50=50%TIME_LIMIT). 
 #SBATCH --mail-user=gbellomi@sissa.it       # Where to send the mail
 #
@@ -13,9 +13,8 @@
 # > Clarifications at https://slurm.schedmd.com/mc_support.html 
 # > but be aware of Ulysses MPI idiosyncrasies: https://www.itcs.sissa.it/services/computing/hpc  
 #
-#SBATCH --cpus-per-task=40                  # Number of threads per MPI rank (MAX: 2x32 cores on _partition_2, 2x20 cores on _partition_1) 
 #SBATCH --nodes=1                           # Total number of requested nodes (==ntasks if cpus-per-task is set to max)
-#SBATCH --ntasks-per-node=1                 # Set to 1 to be sure that different tasks run on different nodes
+#SBATCH --hint=nomultithread                # Be sure we have just physical cores
 #SBATCH --ntasks-per-core=1                 # Set to 1 to be sure that different tasks run on different cores
 #
 # ---- Memory configuration ----
@@ -24,7 +23,7 @@
 #
 # ---- Partition, Walltime and Output ----
 #
-#SBATCH --partition=long1                   # Avail: regular1, regular2, long1, long2, wide1, wide2, gpu1, gpu2. Multiple partitions are possible.
+#SBATCH --partition=long1,long2             # Avail: regular1, regular2, long1, long2, wide1, wide2, gpu1, gpu2. Multiple partitions are possible.
 #SBATCH --time=48:00:00                     # Time limit hrs:min:sec
 #SBATCH --output=sLOG_%x_out%j              # Standard output log -- WARNING: %x requires a new enough SLURM. Use %j for regular jobs and %A-%a for array jobs
 #SBATCH --error=sLOG_%x_err%j               # Standard error  log -- WARNING: %x requires a new enough SLURM. Use %j for regular jobs and %A-%a for array jobs
@@ -79,24 +78,7 @@ cd $SLURM_SUBMIT_DIR # Brings the shell into the directory from which you’ve s
 #
 # >> Workflows (fill and uncomment)
 #matlab -batch "runDMFT.dry_line(EXE,doMPI,Uold,Ustart,Ustep,Ustop)"
-mkdir CDMFT
-cp inputHM2D.conf CDMFT/inputHM2D.conf
-cd CDMFT
-matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare_bath_overhaul',true,NaN,0.0,0.1,1.0)"
-matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare_bath_overhaul',true,0.9,1.0,0.2,2.6)"
-matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare_bath_overhaul',true,2.4,2.45,0.05,3)"
-matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare_bath_overhaul',true,2.9,3.1,0.1,4.1)"
-matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare_bath_overhaul',true,4.0,4.5,0.5,6.5)"
-cd ..
-mkdir DMFT
-cp inputHM.conf DMFT/inputHM.conf
-cd DMFT
-matlab -batch "runDMFT.dry_line('ed_hm_square',true,NaN,0.0,0.1,1.0)"
-matlab -batch "runDMFT.dry_line('ed_hm_square',true,0.9,1.0,0.2,2.6)"
-matlab -batch "runDMFT.dry_line('ed_hm_square',true,2.4,2.45,0.05,3)"
-matlab -batch "runDMFT.dry_line('ed_hm_square',true,2.9,3.1,0.1,4.1)"
-matlab -batch "runDMFT.dry_line('ed_hm_square',true,4.0,4.5,0.5,6.5)"
-cd ..
+matlab -batch "runDMFT.dry_line('cdn_hm_2dsquare_fit_overhaul',true,NaN,0,0.1,8)"
 #
 #
 # ==== END OF JOB COMMANDS ===== #
@@ -105,8 +87,3 @@ cd ..
 # Wait for processes, if any.
 echo "Waiting for all the processes to finish..."
 wait
-
-
-
-
-
