@@ -10,6 +10,7 @@ The project relies on several inter-dependent[^1] external libraries:
 - [DMFT-tools](lib/dmft-tools)
 - [DMFT-ED](lib/dmft-ed)
 - [CDMFT-ED](lib/cdmft-ed)
+- [EDlattice](lib/edlat)
 - [DMFT-LAB](lib/dmft-lab)
 
 These dependencies are [embedded](./lib/) through [git submodule tools](https://git-scm.com/book/en/v2/Git-Tools-Submodules). To download the project with all the intended versions of such libraries, just run:

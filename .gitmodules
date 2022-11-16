@@ -16,3 +16,6 @@
 [submodule "scifor"]
 	path = lib/scifor
 	url = https://github.com/QcmPlab/SciFortran
+[submodule "edlat"]
+	path = lib/edlat
+	url = https://github.com/QcmPlab/EDlattice.git
