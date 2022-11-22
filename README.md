@@ -4,7 +4,7 @@ A collection of programs and scripts to solve and analyze the Mott-Hubbard trans
 ## Requirements
 The project relies on several inter-dependent[^1] external libraries:
 
-[^1]: More specifically: DMFT-tools depends on SciFortran, DMFT-ED depends on SciFortran, CDMFT-ED depends on both SciFortran and DMFT-tools. DMFT-LAB strictly depends on nothing but a working installation of MATLAB / GNU OCTAVE, but its whole purpose is to manage the runtime and post-processing workflows for DMFT-ED and CDMFT-ED executables so, in a sense, it depends on eveything.
+[^1]: More specifically: DMFT-tools depends on SciFortran, DMFT-ED and EDlattice depend on SciFortran, CDMFT-ED depends on both SciFortran and DMFT-tools. DMFT-LAB strictly depends on nothing but a working installation of MATLAB / GNU OCTAVE, but its whole purpose is to manage the runtime and post-processing workflows for DMFT-ED and CDMFT-ED executables so, in a sense, it depends on eveything.
 
 - [SciFortran](lib/scifor)
 - [DMFT-tools](lib/dmft-tools)

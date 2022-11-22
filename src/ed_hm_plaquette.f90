@@ -1,4 +1,4 @@
-program hubbard_dimer
+program hubbard_plaquette
   USE EDLAT
   USE SCIFOR
   USE DMFT_TOOLS
@@ -19,7 +19,7 @@ program hubbard_dimer
   call add_ctrl_var(wfin,"wfin")
   call add_ctrl_var(eps,"eps")
 
-  if(Nspin/=1.OR.Norb/=1.OR.Nsites(1)/=2)stop "This test driver is for a nonmagnetic, single-orbital, dimer only"
+  if(Nspin/=1.OR.Norb/=1.OR.Nsites(1)/=4)stop "This test driver is 2x2 square plaquette only"
 
 
   !2d square with OBC and staggered energies
@@ -27,9 +27,17 @@ program hubbard_dimer
   !> ionic potential
   call ed_Hij_add_link(1,1,1,1,1, one*eloc)
   call ed_Hij_add_link(2,2,1,1,1,-one*eloc)
+  call ed_Hij_add_link(3,3,1,1,1, one*eloc)
+  call ed_Hij_add_link(4,4,1,1,1,-one*eloc)
   !> hoppings
   call ed_Hij_add_link(1,2,1,1,1,one*ts)
+  call ed_Hij_add_link(1,4,1,1,1,one*ts)
   call ed_Hij_add_link(2,1,1,1,1,one*ts)
+  call ed_Hij_add_link(2,3,1,1,1,one*ts)
+  call ed_Hij_add_link(3,2,1,1,1,one*ts)
+  call ed_Hij_add_link(3,4,1,1,1,one*ts)
+  call ed_Hij_add_link(4,1,1,1,1,one*ts)
+  call ed_Hij_add_link(4,3,1,1,1,one*ts)
   !
   call ed_Hij_info()
   call ed_Hij_write()
@@ -40,7 +48,7 @@ program hubbard_dimer
 
 
 
-end program hubbard_dimer
+end program hubbard_plaquette
 
 
 
