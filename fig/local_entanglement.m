@@ -11,7 +11,7 @@ plot(U,nSSR)
 
 function [pEE,nEE] = build_SSRs(fullEE)
 
-   [pmold,UDIR] = postDMFT.get_list('U')
+   [pmold,UDIR] = postDMFT.get_list('U');
 
    p1 = zeros(size(pmold));
    p2 = zeros(size(pmold));
@@ -28,11 +28,8 @@ function [pEE,nEE] = build_SSRs(fullEE)
       cd('..')
    end
 
-   pEE = (p1+p4).*log(p1+p4) + (p2+p3).*log(p2+p3)
-   pEE = pEE/log(2) + fullEE
-
-   nEE = (p2+p3).*log(p2+p3) - p2.*log(p2) - p3.*log(p3)
-   nEE = nEE/log(2)
+   pEE = (p1+p4).*log2(p1+p4) + (p2+p3).*log2(p2+p3) + fullEE;
+   nEE = (p2+p3).*log2(p2+p3) - p2.*log2(p2) - p3.*log2(p3);
 
 end
 
