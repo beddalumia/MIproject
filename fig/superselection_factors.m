@@ -31,37 +31,45 @@ plotDMFT.import_colorlab
 
 figure("Name",'Plaquette Reducing Factors')
 
-subplot(2,2,1,'align')
+tiledlayout(2,2,'TileSpacing','compact')
+
+nexttile
 plot(Uloc,S1,'LineWidth',1.5,'Color',str2rgb('matlab4'))
 xlim([0,3])
 ylim([1,2])
+legend("$s_1$",'Location','southwest','Interpreter','latex')
 ylabel("Units of $\log(2)$")
-xlabel(""); xticklabels([])
+xlabel(""); %xticklabels([])
 
-subplot(2,2,2,'align')
-plot(Uloc,Ifull,'LineWidth',1.5,'Color',str2rgb('matlab1'))
+nexttile
+plot(Uloc,Ifull,'LineWidth',1.5,'Color',str2rgb('pyplot3'))
 %xlim([0,3])
 ylim([0.48,1.05])
-ylabel("Units of $\log(2)$")
-xlabel(""); xticklabels([])
+legend("$2s_1-s_2$",'Location','southeast','Interpreter','latex')
+xlabel(""); %xticklabels([])
 
-subplot(2,2,3,'align')
-plot(Uloc,S1./pSSR_S1)
+nexttile
+plot(Uloc,S1./nSSR_S1,'-','LineWidth',1.5,'Color',str2rgb('Neon Blue'))
 hold on
-plot(Uloc,S1./nSSR_S1)
+plot(Uloc,S1./pSSR_S1,'--','LineWidth',1.5,'Color',str2rgb('Hot Pink'))
 xlim([0,3])
-ylim([0,11])
+ylim([1,11])
 xlabel("$U/D$")
+ylabel("Superselection Divisor")
+legend(["N-SSR","P-SSR"],'Location','northwest')
 
-subplot(2,2,4,'align')
-plot(Uloc,Ifull./pSSR_I)
+nexttile
+plot(Uloc,Ifull./nSSR_I,'-','LineWidth',1.5,'Color',str2rgb('Neon Blue'))
 hold on
-plot(Uloc,Ifull./nSSR_I)
+plot(Uloc,Ifull./pSSR_I,'--','LineWidth',1.5,'Color',str2rgb('Hot Pink'))
 %xlim([0,3])
-%ylim([0,11])
+ylim([1,6.5])
 xlabel("$U/D$")
+%ylabel("Superselection Divisor")
+legend(["N-SSR","P-SSR"],'Location','northeast')
 
-
+matlab2tikz('superselection.tex','strict',true,...
+    'width','0.4\textwidth','height','0.6\textwidth')
 
 %% Utilities
 
