@@ -1,12 +1,57 @@
-U = load('U_list.txt');
+set(0,'defaulttextinterpreter','latex')
+
+%% Data wrangling
+
+[filepath,name,extension] = fileparts(mfilename('fullpath'));
+HERE = erase(filepath,name);
+
+cd('../../Data/CDMFT/4sites2replicas/')
+
+Uloc = load('U_list.txt');
+
+s1 = postDMFT.eentropy_line('1sites');
+s2 = postDMFT.eentropy_line('2sites');
+
+MI =  2.*s1 - s2;
 
 print_basis
 
 [pSSR,nSSR] = build_SSRs();
 
-plot(U,pSSR)
+cd(HERE)
+
+%% Actual graphics
+
+plotDMFT.import_colorlab
+
+% Local entropy as a upper bound for all 1-site correlation
+plot(Uloc,s1,':','LineWidth',1.5,'Color',str2rgb('matlab4'))
 hold on
-plot(U,nSSR)
+% Upper bound on bond entanglement (bond mutual information)
+plot(Uloc,MI,'-.','LineWidth',1.5,'Color',str2rgb('pyplot3'))
+% Filling area between the bounds (entanglement interval...)
+fill([Uloc;flipud(Uloc)],[nSSR;flipud(MI)],str2rgb("light khaki"),...
+    'EdgeColor','none')
+% Lower bound on bond entanglement (meaningful entanglement)
+plot(Uloc,nSSR,'-','LineWidth',1.5,'Color',str2rgb('pea'))
+plot(Uloc,pSSR,'--','LineWidth',1.5,'Color',str2rgb('peach'))
+
+xlim([-0.01,8.01])
+xlabel("$U/D$")
+ylabel("Units of $\log(2)$")
+%set(gca,'FontSize',15)
+
+legend(["local entanglement entropy $s_1$",...
+        "bond correlation $2s_1-s_2$",...
+        "unrestricted bond entanglement",...
+        "N-SSR bond entanglement",...
+        "P-SSR bond entanglement",],...
+    "Interpreter",'latex','Location','northeast')
+
+matlab2tikz('bond_entanglement.tex','strict',true,...
+    'width','0.45\textwidth','height','0.6\textwidth')
+
+%% Utilities
 
 function [pE,nE] = build_SSRs()
 

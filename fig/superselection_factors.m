@@ -5,10 +5,6 @@ set(0,'defaulttextinterpreter','latex')
 [filepath,name,extension] = fileparts(mfilename('fullpath'));
 HERE = erase(filepath,name);
 
-%cd('../../Data/CDMFT/Carlos/EEs/')
-
-cd(HERE)
-
 cd('../../Data/CDMFT/4sites2replicas/')
 
 Uloc = load('U_list.txt');
