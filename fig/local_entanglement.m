@@ -30,8 +30,6 @@ cd('../../Data/CDMFT/4sites2replicas/')
 U4 = load('U_list.txt');
 S4 = postDMFT.eentropy_line('1sites');
 
-[pSSR,nSSR] = build_SSRs(S4);
-
 cd(HERE)
 
 %% Actual graphics
@@ -56,6 +54,6 @@ legend(["ED $1\times2$, $N_\mathrm{bath}=10$",...
         "ASCI $2\times2$, $N_\mathrm{bath}=24$",...
         "ASCI $3\times2$, $N_\mathrm{bath}=36$",...
         "ASCI $4\times2$, $N_\mathrm{bath}=48$"],...
-        'Interpreter','latex')
-%matlab2tikz('local_scaling.tex','strict',true,'noSize',true)
+        'Interpreter','latex'); legend('boxoff')
+matlab2tikz('local_scaling.tex','strict',true,'noSize',true)
 

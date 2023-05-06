@@ -34,6 +34,7 @@ plot(Uloc,S1,'LineWidth',1.5,'Color',str2rgb('matlab4'))
 xlim([0,3])
 ylim([1,2])
 legend("$s_1$",'Location','southwest','Interpreter','latex')
+legend('boxoff')
 ylabel("Units of $\log(2)$")
 xlabel(""); %xticklabels([])
 
@@ -42,6 +43,7 @@ plot(Uloc,Ifull,'LineWidth',1.5,'Color',str2rgb('pyplot3'))
 %xlim([0,3])
 ylim([0.48,1.05])
 legend("$2s_1-s_2$",'Location','southeast','Interpreter','latex')
+legend('boxoff')
 xlabel(""); %xticklabels([])
 
 nexttile
@@ -53,6 +55,7 @@ ylim([1,11])
 xlabel("$U/D$")
 ylabel("Superselection Divisor")
 legend(["N-SSR","P-SSR"],'Location','northwest')
+legend('boxoff')
 
 nexttile
 plot(Uloc,Ifull./nSSR_I,'-','LineWidth',1.5,'Color',str2rgb('Neon Blue'))
@@ -63,6 +66,7 @@ ylim([1,6.5])
 xlabel("$U/D$")
 %ylabel("Superselection Divisor")
 legend(["N-SSR","P-SSR"],'Location','northeast')
+legend('boxoff')
 
 matlab2tikz('superselection.tex','strict',true,...
     'width','0.4\textwidth','height','0.6\textwidth')
