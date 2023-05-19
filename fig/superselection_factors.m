@@ -15,9 +15,8 @@ Ifull =  2.*S1 - S2;
 
 print_basis
 
-[pSSR_I,nSSR_I] = build_SSRs_I(S1,S2);
-
 [pSSR_S1,nSSR_S1] = build_SSRs_S(S1);
+[pSSR_I,nSSR_I,pSSR_S2,nSSR_S2] = build_SSRs_I(S1,S2);
 
 cd(HERE)
 
@@ -27,13 +26,22 @@ plotDMFT.import_colorlab
 
 figure("Name",'Plaquette Reducing Factors')
 
-tiledlayout(2,2,'TileSpacing','compact')
+tiledlayout(2,3,'TileSpacing','compact')
 
 nexttile
 plot(Uloc,S1,'LineWidth',1.5,'Color',str2rgb('matlab4'))
 xlim([0,3])
 ylim([1,2])
 legend("$s_1$",'Location','southwest','Interpreter','latex')
+legend('boxoff')
+ylabel("Units of $\log(2)$")
+xlabel(""); %xticklabels([])
+
+nexttile
+plot(Uloc,S2,'LineWidth',1.5,'Color',str2rgb('pyplot2'))
+%xlim([0,3])
+%ylim([1,2])
+legend("$s_2$",'Location','southwest','Interpreter','latex')
 legend('boxoff')
 ylabel("Units of $\log(2)$")
 xlabel(""); %xticklabels([])
@@ -54,6 +62,17 @@ xlim([0,3])
 ylim([1,11])
 xlabel("$U/D$")
 ylabel("Superselection Divisor")
+legend(["N-SSR","P-SSR"],'Location','northwest')
+legend('boxoff')
+
+nexttile
+plot(Uloc,S2./nSSR_S2,'-','LineWidth',1.5,'Color',str2rgb('Neon Blue'))
+hold on
+plot(Uloc,S2./pSSR_S2,'--','LineWidth',1.5,'Color',str2rgb('Hot Pink'))
+%xlim([0,3])
+%ylim([1,11])
+xlabel("$U/D$")
+%ylabel("Superselection Divisor")
 legend(["N-SSR","P-SSR"],'Location','northwest')
 legend('boxoff')
 
@@ -98,7 +117,7 @@ function [pEE,nEE] = build_SSRs_S(fullEE)
 end
 
 
-function [pMI,nMI] = build_SSRs_I(S1,S2)
+function [pMI,nMI,pS2,nS2] = build_SSRs_I(S1,S2)
 
    [mold,UDIR] = postDMFT.get_list('U');
 
