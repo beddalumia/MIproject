@@ -5,9 +5,9 @@ set(0,'defaulttextinterpreter','latex')
 [filepath,name,extension] = fileparts(mfilename('fullpath'));
 HERE = erase(filepath,name);
 
-cd('../../Data/CDMFT/Carlos/EEs/')
+cd('../../Data/CDMFT/Carlos/LATEST/')
 
-temp = readtable('SingleSite.dat');
+temp = readtable('SingleSite2.dat');
 Uloc = temp.Var1;
 S1x2 = temp.Var2;
 S2x2 = temp.Var3;
