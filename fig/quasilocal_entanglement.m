@@ -37,8 +37,8 @@ cd(HERE)
 plotDMFT.import_colorlab
 
 figure("Name",'Local Entropy Scaling')
-%plot(U2,S2,'-','LineWidth',1.5,'Color',str2rgb('matlab4'))
-plot(U4,S4,'--','LineWidth',1.5,'Color',str2rgb('fuchsia'))
+%plot(U2,S2,'-','LineWidth',1.5,'Color',str2rgb('fuchsia'))
+plot(U4,S4,'--','LineWidth',1.5,'Color',str2rgb('matlab4'))
 hold on
 %plot(Uloc,S1x2,'o','LineWidth',1.5,'MarkerSize',10,'Color',str2rgb('pyplot2'))
 plot(Uloc,S2x2,'x','LineWidth',1.5,'MarkerSize',10,'Color',hex2rgb('00A4EF'))
