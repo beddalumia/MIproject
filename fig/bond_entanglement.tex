@@ -82,7 +82,7 @@ legend style={legend cell align=left, align=left, fill=none, draw=none}
 7.5	1.05682889841936\\
 8	1.05114754774732\\
 };
-\addlegendentry{local entanglement entropy $s_1$}
+\addlegendentry{local entanglement entropy $s_i$}
 
 \addplot [color=mycolor2, dashdotted, line width=1.5pt]
   table[row sep=crcr]{%
@@ -128,7 +128,7 @@ legend style={legend cell align=left, align=left, fill=none, draw=none}
 7.5	0.841888277561215\\
 8	0.837131389130535\\
 };
-\addlegendentry{bond correlation $2s_1-s_2$}
+\addlegendentry{total NN correlation $s_i+s_j-s_{\langle ij \rangle}$}
 
 
 \addplot[area legend, line width=0.5pt, draw=none, fill=mycolor3]
@@ -217,7 +217,7 @@ x	y\\
 0.1	0.572322343872089\\
 0	0.589909918412015\\
 }--cycle;
-\addlegendentry{unrestricted bond entanglement}
+\addlegendentry{unrestricted NN entanglement}
 
 \addplot [color=mycolor4, line width=1.5pt]
   table[row sep=crcr]{%
@@ -263,7 +263,7 @@ x	y\\
 7.5	0.57627713111608\\
 8	0.576634672632137\\
 };
-\addlegendentry{N-SSR bond entanglement}
+\addlegendentry{NN entanglement under N-SSR}
 
 \addplot [color=mycolor5, dashed, line width=1.5pt]
   table[row sep=crcr]{%
@@ -309,7 +309,7 @@ x	y\\
 7.5	0.576277143049852\\
 8	0.576634680759591\\
 };
-\addlegendentry{P-SSR bond entanglement}
+\addlegendentry{NN entanglement under P-SSR}
 
 \end{axis}
 \end{tikzpicture}%

@@ -33,7 +33,7 @@ nexttile
 plot(Uloc,S1,'LineWidth',1.5,'Color',str2rgb('matlab4'))
 xlim([0,3])
 ylim([1,2])
-legend("$s_1$",'Location','southwest','Interpreter','latex')
+legend("$s_i$",'Location','southwest','Interpreter','latex')
 legend('boxoff')
 ylabel("Units of $\log(2)$")
 xlabel(""); %xticklabels([])
@@ -42,7 +42,7 @@ nexttile
 plot(Uloc,Ifull,'LineWidth',1.5,'Color',str2rgb('pyplot3'))
 %xlim([0,3])
 ylim([0.48,1.05])
-legend("$2s_1-s_2$",'Location','southeast','Interpreter','latex')
+legend("$2s_i-s_{\langle ij \rangle}$",'Location','southeast','Interpreter','latex')
 legend('boxoff')
 xlabel(""); %xticklabels([])
 
