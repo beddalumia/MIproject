@@ -49,6 +49,7 @@ legend(["local entanglement entropy $s_i$",...
     "Interpreter",'latex','Location','northeast')
 legend('boxoff')
 
+%% Export to TikZ
 matlab2tikz('bond_entanglement.tex','strict',true,...
     'width','0.45\textwidth','height','0.6\textwidth')
 

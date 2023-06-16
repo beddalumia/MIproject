@@ -68,6 +68,7 @@ xlabel("$U/D$")
 legend(["N-SSR","P-SSR"],'Location','northeast')
 legend('boxoff')
 
+%% Export to TikZ
 matlab2tikz('superselection.tex','strict',true,...
     'width','0.4\textwidth','height','0.6\textwidth')
 
