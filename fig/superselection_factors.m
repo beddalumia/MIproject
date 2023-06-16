@@ -42,7 +42,7 @@ nexttile
 plot(Uloc,Ifull,'LineWidth',1.5,'Color',str2rgb('pyplot3'))
 %xlim([0,3])
 ylim([0.48,1.05])
-legend("$2s_i-s_{\langle ij \rangle}$",'Location','southeast','Interpreter','latex')
+legend("$I_{\langle ij \rangle}$",'Location','southeast','Interpreter','latex')
 legend('boxoff')
 xlabel(""); %xticklabels([])
 
