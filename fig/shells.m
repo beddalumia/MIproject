@@ -1,4 +1,5 @@
-set(0,'defaulttextinterpreter','latex')
+%set(0,'defaulttextinterpreter','latex')
+magicLaTeX;
 
 %% Data wrangling
 
@@ -29,17 +30,17 @@ cd(HERE)
 plotDMFT.import_colorlab
 
 plot3(ones(size(Uloc)),Uloc,MI,...
-    '.:','LineWidth',.3,'MarkerSize',15,...
+    '.:','LineWidth',2,'MarkerSize',21,...
     'Color',str2rgb('matlab4'))
 
 hold on
 
 for i = 1:length(dist)
     plot3(ones(size(uloc))*dist(i),uloc,data(:,i),...
-        '*','MarkerSize',7,'LineWidth',1.5,...
+        '*','MarkerSize',13,'LineWidth',2,...
         'Color',str2rgb('pyplot3'));
     plot3(ones(size(uloc))*dist(i),uloc,data(:,i),...
-        '-','LineWidth',.5,...
+        '-','LineWidth',2,...
         'Color',str2rgb('pyplot3'));
 end
 
@@ -65,5 +66,12 @@ legend(["ED $2\times2$, $N_\mathrm{bath}=8$",...
     'Location','best',...
     'Interpreter','latex')
 
+%% Save to PDF
+set(gcf,'Renderer','painters');
+saveFigureAsPDF(gcf,'shells.pdf');
+
 %% Export to TikZ
 matlab2tikz('shells.tex','strict',true,'noSize',true)
+
+%% Clear Secli's black magic
+clear magicLaTeX; 
