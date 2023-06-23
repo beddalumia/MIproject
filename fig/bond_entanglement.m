@@ -38,6 +38,7 @@ plot(Uloc,pSSR,'--','LineWidth',1.5,'Color',str2rgb('Hot Pink'))
 
 xlim([0,8])
 xlabel("$U/D$")
+ylim([-0.05,2.05])
 ylabel("Units of $\log(2)$")
 %set(gca,'FontSize',15)
 
