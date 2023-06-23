@@ -52,7 +52,7 @@ legend('boxoff')
 
 %% Export to TikZ
 matlab2tikz('bond_entanglement.tex','strict',true,...
-    'width','0.4\textwidth','height','0.6\textwidth')
+    'width','0.3\textwidth','height','0.7\textwidth')
 
 %% Utilities
 
