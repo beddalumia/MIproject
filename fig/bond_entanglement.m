@@ -33,8 +33,8 @@ plot(Uloc,MI,'-.','LineWidth',1.5,'Color',str2rgb('pyplot3'))
 fill([Uloc;flipud(Uloc)],[nSSR;flipud(MI)],str2rgb("light khaki"),...
     'EdgeColor','none')
 % Lower bound on bond entanglement (meaningful entanglement)
-plot(Uloc,nSSR,'-','LineWidth',1.5,'Color',str2rgb('pea'))
-plot(Uloc,pSSR,'--','LineWidth',1.5,'Color',str2rgb('peach'))
+plot(Uloc,nSSR,'-','LineWidth',1.5,'Color',str2rgb('Neon Blue'))
+plot(Uloc,pSSR,'--','LineWidth',1.5,'Color',str2rgb('Hot Pink'))
 
 xlim([0,8])
 xlabel("$U/D$")
@@ -51,7 +51,7 @@ legend('boxoff')
 
 %% Export to TikZ
 matlab2tikz('bond_entanglement.tex','strict',true,...
-    'width','0.45\textwidth','height','0.6\textwidth')
+    'width','0.4\textwidth','height','0.6\textwidth')
 
 %% Utilities
 
