@@ -66,7 +66,7 @@ fig.InvertHardcopy = 'Off';
 w_id = 'MATLAB:print:FigureTooLargeForPage';
 w    = warning('query',w_id);
 warning('off',w_id);
-saveas(gcf,filename,'pdf');
+saveas(fig,filename,'pdf');
 warning(w.state,w_id);
 
 % Restore old settings
