@@ -29,21 +29,38 @@ cd(HERE)
 
 %% Actual Plotting
 plotDMFT.import_colorlab
-full = imagesc(sign(abs(RDM)));  full.AlphaData = 1/3;
-hold on
-pssr = imagesc(sign(abs(pRDM))); pssr.AlphaData = 1/3;
-nssr = imagesc(sign(abs(nRDM))); nssr.AlphaData = 1/3;
-
-set_palette("Greys")
-
+% Trick to enable clever multi-axes
+t = tiledlayout(1,1);
+% Full RDM
+f_ax = axes(t); 
+full = imagesc(sign(abs(RDM)));  full.AlphaDataMapping = 'scaled';
+xlim([0.5,16.5]); xticks([1:16]); xticklabels(string([1:16]));
+ylim([0.5,16.5]); yticks([1:16]); yticklabels(string([1:16]));
+axis square; f_ax.Color = "None"; 
+% Tick magic :)
+set(f_ax,'yaxisLocation','right');
+set(f_ax,'TickLength',[0 0])
+set(f_ax,'TickLabelInterpreter','latex')
+% P-SSR RDM
+p_ax = axes(t); 
+pssr = imagesc(sign(abs(pRDM))); pssr.AlphaDataMapping = 'scaled';
+xlim([0.5,16.5]); xticks([]); % Disallow ticks to
+ylim([0.5,16.5]); yticks([]); % avoid cluttering…
+axis square; p_ax.Color = "None";
+% N-SSR RDM
+n_ax = axes(t); 
+nssr = imagesc(sign(abs(nRDM))); nssr.AlphaDataMapping = 'scaled';
 xlim([0.5,16.5]); xticks([1:16]); xticklabels(bras);
 ylim([0.5,16.5]); yticks([1:16]); yticklabels(kets);
-axis square
-
+axis square; n_ax.Color = "None";
 % Tick magic :)
-set(gca,'xaxisLocation','top')
-set(gca,'TickLength',[0 0])
+set(n_ax,'xaxisLocation','top')
+set(n_ax,'TickLength',[0 0])
 
+% Global Colormap
+set_palette("Greys")
+
+% Global Grid
 for i = 1:16
     xline(i-0.5)
     yline(i-0.5)
