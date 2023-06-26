@@ -120,15 +120,20 @@ function [pRDM,nRDM] = filter_RDM(RDM)
    % Restore the pair-hopping terms
    pRDM(6,11) = RDM(6,11);
    pRDM(11,6) = RDM(11,6);
+   % Rotate the pair-hopping terms
+   aa = nRDM(6,6);
+   bb = nRDM(11,11);
+   ab = nRDM(6,11);
+   ba = nRDM(11,6);
+   AB = [aa,ab;ba,bb];
+   rot = [1,-1; 1,1]./sqrt(2);
+   new = rot*AB*rot';
+   nRDM(6,6) = new(1,1);
+   nRDM(11,11) = new(2,2);
    % Global singlet assertion
    assert(all(abs(RDM(4,4)-RDM(13,13))<1e-12))
    % Particle-hole symmetry assertion
    assert(all(abs(RDM(1,1)-RDM(16,16))<1e-4))
-end
-
-function E = vonNeumann(RDM)
-   p = eig(RDM);
-   E = -sum(real(p.*log2(p)));
 end
 
 %% FROM ED_SETUP:
