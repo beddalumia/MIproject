@@ -1,110 +1,123 @@
-% This file was created by matlab2tikz.
-%
-%The latest updates can be retrieved from
-%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
-%where you can also make suggestions and rate matlab2tikz.
-%
-\definecolor{mycolor1}{rgb}{0.49400,0.18400,0.55600}%
-\definecolor{mycolor2}{rgb}{0.00000,0.64314,0.93725}%
-\definecolor{mycolor3}{rgb}{1.00000,0.72549,0.00000}%
-\definecolor{mycolor4}{rgb}{0.49804,0.72941,0.00000}%
-%
-\begin{tikzpicture}
+\documentclass[tikz]{standalone}
+% > standalone package to make APS happy with their PDFs
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+% > the following commands are needed for some matlab2tikz features
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{arrows.meta}
+\usepgfplotslibrary{patchplots}
 
-\begin{axis}[%
-separate axis lines,
-every outer x axis line/.append style={white!15!black},
-every x tick label/.append style={font=\color{white!15!black}},
-every x tick/.append style={white!15!black},
-xmin=0,
-xmax=8,
-xtick={0,1,2,3,4,5,6,7,8},
-xlabel style={font=\color{white!15!black}},
-xlabel={$U/D$},
-every outer y axis line/.append style={white!15!black},
-every y tick label/.append style={font=\color{white!15!black}},
-every y tick/.append style={white!15!black},
-ymin=1,
-ymax=3.5,
-ytick={1,1.5,2,2.5,3,3.5},
-ylabel style={font=\color{white!15!black}},
-ylabel={Units of $\log(2)$},
-axis background/.style={fill=white},
-axis on top,
-legend style={legend cell align=left, align=left, fill=none, draw=none}
-]
-\addplot [color=mycolor1, dashed, line width=1.5pt]
-  table[row sep=crcr]{%
-0	3.4100897730774\\
-0.1	3.42534060933423\\
-0.2	3.41985270184968\\
-0.3	3.4106998073604\\
-0.4	3.39772937573221\\
-0.5	3.38096440183858\\
-0.6	3.36013473457322\\
-0.7	3.33496831653927\\
-0.8	3.30523268111239\\
-0.9	3.27048875057348\\
-1	3.23024401868287\\
-1.1	3.18362600301643\\
-1.2	3.12921125757564\\
-1.3	3.06450247571803\\
-1.4	2.98419585549114\\
-1.5	2.87119300507304\\
-1.6	2.0593001761532\\
-1.7	1.96927273331554\\
-1.8	1.88894263190754\\
-1.9	1.82629143959113\\
-2	1.77424742116288\\
-2.1	1.72767592447747\\
-2.2	1.68970375156509\\
-2.3	1.65867694373\\
-2.4	1.62434524915306\\
-2.5	1.59844285814376\\
-2.6	1.57344218027992\\
-2.7	1.55256275068703\\
-2.8	1.53286493309321\\
-2.9	1.51454976372328\\
-3	1.49890785669736\\
-3.5	1.43418847137702\\
-4	1.39010529203713\\
-4.5	1.35785687277627\\
-5	1.33398764896045\\
-5.5	1.31552015283876\\
-6	1.30100030932115\\
-6.5	1.28928135095175\\
-7	1.27979575741809\\
-7.5	1.27176951927751\\
-8	1.26516370636411\\
-};
-\addlegendentry{ED $2\times2$, $N_\mathrm{bath}=8$}
+\begin{document}  
 
-\addplot [color=mycolor2, line width=1.5pt, only marks, mark size=5.0pt, mark=x, mark options={solid, mycolor2}]
-  table[row sep=crcr]{%
-0.25	3.488872797534\\
-2	1.963526851731\\
-3	1.632180416765\\
-7	1.320740018376\\
-};
-\addlegendentry{ASCI $2\times2$, $N_\mathrm{bath}=24$}
+  % This file was created by matlab2tikz.
+  %
+  %The latest updates can be retrieved from
+  %  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+  %where you can also make suggestions and rate matlab2tikz.
+  %
+  \definecolor{mycolor1}{rgb}{0.49400,0.18400,0.55600}%
+  \definecolor{mycolor2}{rgb}{0.00000,0.64314,0.93725}%
+  \definecolor{mycolor3}{rgb}{1.00000,0.72549,0.00000}%
+  \definecolor{mycolor4}{rgb}{0.49804,0.72941,0.00000}%
+  %
+  \begin{tikzpicture}
 
-\addplot [color=mycolor3, line width=1.5pt, only marks, mark size=3.5pt, mark=square, mark options={solid, mycolor3}]
-  table[row sep=crcr]{%
-0.25	3.29628315906\\
-2	1.822198017691\\
-3	1.426021227586\\
-7	1.096754157812\\
-};
-\addlegendentry{ASCI $3\times2$, $N_\mathrm{bath}=36$}
+  \begin{axis}[%
+  separate axis lines,
+  every outer x axis line/.append style={white!15!black},
+  every x tick label/.append style={font=\color{white!15!black}},
+  every x tick/.append style={white!15!black},
+  xmin=0,
+  xmax=8,
+  xtick={0,1,2,3,4,5,6,7,8},
+  xlabel style={font=\color{white!15!black}},
+  xlabel={$U/D$},
+  every outer y axis line/.append style={white!15!black},
+  every y tick label/.append style={font=\color{white!15!black}},
+  every y tick/.append style={white!15!black},
+  ymin=1,
+  ymax=3.5,
+  ytick={1,1.5,2,2.5,3,3.5},
+  ylabel style={font=\color{white!15!black}},
+  ylabel={Units of $\log(2)$},
+  axis background/.style={fill=white},
+  axis on top,
+  legend style={legend cell align=left, align=left, fill=none, draw=none}
+  ]
+  \addplot [color=mycolor1, dashed, line width=1.5pt]
+    table[row sep=crcr]{%
+  0	3.4100897730774\\
+  0.1	3.42534060933423\\
+  0.2	3.41985270184968\\
+  0.3	3.4106998073604\\
+  0.4	3.39772937573221\\
+  0.5	3.38096440183858\\
+  0.6	3.36013473457322\\
+  0.7	3.33496831653927\\
+  0.8	3.30523268111239\\
+  0.9	3.27048875057348\\
+  1	3.23024401868287\\
+  1.1	3.18362600301643\\
+  1.2	3.12921125757564\\
+  1.3	3.06450247571803\\
+  1.4	2.98419585549114\\
+  1.5	2.87119300507304\\
+  1.6	2.0593001761532\\
+  1.7	1.96927273331554\\
+  1.8	1.88894263190754\\
+  1.9	1.82629143959113\\
+  2	1.77424742116288\\
+  2.1	1.72767592447747\\
+  2.2	1.68970375156509\\
+  2.3	1.65867694373\\
+  2.4	1.62434524915306\\
+  2.5	1.59844285814376\\
+  2.6	1.57344218027992\\
+  2.7	1.55256275068703\\
+  2.8	1.53286493309321\\
+  2.9	1.51454976372328\\
+  3	1.49890785669736\\
+  3.5	1.43418847137702\\
+  4	1.39010529203713\\
+  4.5	1.35785687277627\\
+  5	1.33398764896045\\
+  5.5	1.31552015283876\\
+  6	1.30100030932115\\
+  6.5	1.28928135095175\\
+  7	1.27979575741809\\
+  7.5	1.27176951927751\\
+  8	1.26516370636411\\
+  };
+  \addlegendentry{$2\times2$, $N_\mathrm{bath}=08$ (ED)}
 
-\addplot [color=mycolor4, line width=1.5pt, only marks, mark size=4.5pt, mark=triangle, mark options={solid, mycolor4}]
-  table[row sep=crcr]{%
-0.25	3.133131051853\\
-2	1.764364673251\\
-3	1.485194539148\\
-7	1.178075739691\\
-};
-\addlegendentry{ASCI $4\times2$, $N_\mathrm{bath}=48$}
+  \addplot [color=mycolor2, line width=1.5pt, only marks, mark size=5.0pt, mark=x, mark options={solid, mycolor2}]
+    table[row sep=crcr]{%
+  0.25	3.488872797534\\
+  2	1.963526851731\\
+  3	1.632180416765\\
+  7	1.320740018376\\
+  };
+  \addlegendentry{$2\times2$, $N_\mathrm{bath}=24$ (ASCI)}
 
-\end{axis}
-\end{tikzpicture}%
+  \addplot [color=mycolor3, line width=1.5pt, only marks, mark size=3.5pt, mark=square, mark options={solid, mycolor3}]
+    table[row sep=crcr]{%
+  0.25	3.29628315906\\
+  2	1.822198017691\\
+  3	1.426021227586\\
+  7	1.096754157812\\
+  };
+  \addlegendentry{$3\times2$, $N_\mathrm{bath}=36$ (ASCI)}
+
+  \addplot [color=mycolor4, line width=1.5pt, only marks, mark size=4.5pt, mark=triangle, mark options={solid, mycolor4}]
+    table[row sep=crcr]{%
+  0.25	3.133131051853\\
+  2	1.764364673251\\
+  3	1.485194539148\\
+  7	1.178075739691\\
+  };
+  \addlegendentry{$4\times2$, $N_\mathrm{bath}=48$ (ASCI)}
+
+  \end{axis}
+  \end{tikzpicture}%
+
+\end{document}
