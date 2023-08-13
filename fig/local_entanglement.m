@@ -37,7 +37,7 @@ cd(HERE)
 plotDMFT.import_colorlab
 
 figure("Name",'Local Entropy Scaling')
-plot(U2,S2,'-+','LineWidth',1.5,'Color',str2rgb('fuchsia'))
+plot(U2,S2,'-+','LineWidth',1.5,'Color',str2rgb('lilac'))
 hold on
 plot(U4,S4,'-*','LineWidth',1.5,'Color',str2rgb('matlab4'))
 ylim([1,2])

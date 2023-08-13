@@ -41,6 +41,7 @@
   ymin=1,
   ymax=2,
   ytick={1,1.2,1.4,1.6,1.8,2},
+  yticklabel style={/pgf/number format/.cd,fixed zerofill,precision=1},
   ylabel style={font=\color{white!15!black}},
   ylabel={Units of $\log(2)$},
   axis background/.style={fill=white},
@@ -113,6 +114,7 @@
   ymin=0.48,
   ymax=1.07,
   ytick={0.5,0.6,0.7,0.8,0.9,1},
+  yticklabel style={/pgf/number format/.cd,fixed,fixed zerofill,precision=1},
   axis background/.style={fill=white},
   axis on top,
   legend style={at={(0.97,0.03)}, anchor=south east, legend cell align=left, align=left, fill=none, draw=none}

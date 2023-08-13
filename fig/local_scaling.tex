@@ -15,7 +15,7 @@
   %  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
   %where you can also make suggestions and rate matlab2tikz.
   %
-  \definecolor{mycolor1}{rgb}{0.92941,0.05098,0.85098}%
+  \definecolor{mycolor1}{rgb}{0.80780,0.63530,0.99220}%
   \definecolor{mycolor2}{rgb}{0.49400,0.18400,0.55600}%
   \definecolor{mycolor3}{rgb}{1.00000,0.49804,0.05490}%
   \definecolor{mycolor4}{rgb}{0.00000,0.64314,0.93725}%
@@ -40,13 +40,14 @@
   ymin=1,
   ymax=2,
   ytick={1,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2},
+  yticklabel style={/pgf/number format/.cd,fixed zerofill,precision=1},
   ylabel style={font=\color{white!15!black}},
-  ylabel={Units of $\log(2)$},
+  ylabel={$s_i/\log(2)$},
   axis background/.style={fill=white},
   axis on top,
   legend style={legend cell align=left, align=left, fill=none, draw=none}
   ]
-  \addplot [color=mycolor1, line width=1.5pt]
+  \addplot [color=mycolor1, line width=1.5pt, mark size=4.0pt, mark=Mercedes star, mark options={solid, mycolor1}]
     table[row sep=crcr]{%
   0	1.99987302313336\\
   0.1	1.99854704235213\\
@@ -131,7 +132,7 @@
   };
   \addlegendentry{$1\times2$, $N_\mathrm{bath}=10$ (ED)}
 
-  \addplot [color=mycolor2, dashed, line width=1.5pt]
+  \addplot [color=mycolor2, line width=1.5pt, mark size=4.0pt, mark=Mercedes star flipped, mark options={solid, mycolor2}]
     table[row sep=crcr]{%
   0	1.99999984574471\\
   0.1	1.99883147660316\\
@@ -213,7 +214,10 @@
   };
   \addlegendentry{$4\times2$, $N_\mathrm{bath}=48$ (ASCI)}
 
-  \end{axis}
+\end{axis}
+
+\node[below right]
+at (current bounding box.north west) {(a)};
   \end{tikzpicture}%
 
 \end{document}

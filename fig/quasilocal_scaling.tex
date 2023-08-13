@@ -22,29 +22,30 @@
   %
   \begin{tikzpicture}
 
-  \begin{axis}[%
-  separate axis lines,
-  every outer x axis line/.append style={white!15!black},
-  every x tick label/.append style={font=\color{white!15!black}},
-  every x tick/.append style={white!15!black},
-  xmin=0,
-  xmax=8,
-  xtick={0,1,2,3,4,5,6,7,8},
-  xlabel style={font=\color{white!15!black}},
-  xlabel={$U/D$},
-  every outer y axis line/.append style={white!15!black},
-  every y tick label/.append style={font=\color{white!15!black}},
-  every y tick/.append style={white!15!black},
-  ymin=1,
-  ymax=3.5,
-  ytick={1,1.5,2,2.5,3,3.5},
-  ylabel style={font=\color{white!15!black}},
-  ylabel={Units of $\log(2)$},
-  axis background/.style={fill=white},
-  axis on top,
-  legend style={legend cell align=left, align=left, fill=none, draw=none}
-  ]
-  \addplot [color=mycolor1, dashed, line width=1.5pt]
+    \begin{axis}[%
+      separate axis lines,
+      every outer x axis line/.append style={white!15!black},
+      every x tick label/.append style={font=\color{white!15!black}},
+      every x tick/.append style={white!15!black},
+      xmin=0,
+      xmax=8,
+      xtick={0,1,2,3,4,5,6,7,8},
+      xlabel style={font=\color{white!15!black}},
+      xlabel={$U/D$},
+      every outer y axis line/.append style={white!15!black},
+      every y tick label/.append style={font=\color{white!15!black}},
+      every y tick /.append style={white!15!black},
+      ymin=1,
+      ymax=3.5,
+      ytick={1.0,1.5,2.0,2.5,3.0,3.5},
+      yticklabel style={/pgf/number format/.cd,fixed zerofill,precision=1},
+      ylabel style={font=\color{white!15!black}},
+      ylabel={$s_{\langle ij\rangle}/\log(2)$},
+      axis background/.style={fill=white},
+      axis on top,
+      legend style={legend cell align=left, align=left, fill=none, draw=none}
+      ]
+  \addplot [color=mycolor1, line width=1.5pt, mark size=3.0pt, mark=Mercedes star flipped, mark options={solid, mycolor1}]
     table[row sep=crcr]{%
   0	3.4100897730774\\
   0.1	3.42534060933423\\
@@ -116,8 +117,9 @@
   7	1.178075739691\\
   };
   \addlegendentry{$4\times2$, $N_\mathrm{bath}=48$ (ASCI)}
-
-  \end{axis}
+\end{axis}
+\node[below right]
+at (current bounding box.north west) {(b)};
   \end{tikzpicture}%
 
 \end{document}
