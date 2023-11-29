@@ -100,6 +100,10 @@ function E = build_pSSR(RDM)
 end
 
 function [pRDM,nRDM] = filter_RDM(RDM)
+   % Global singlet assertion
+   assert(all(abs(RDM(4,4)-RDM(13,13))<1e-12))
+   % Particle-hole symmetry assertion
+   assert(all(abs(RDM(1,1)-RDM(16,16))<1e-4))
    % Trim all off-diagonals
    nRDM = diag(diag(RDM));
    % Restore the spin-flip terms
@@ -115,25 +119,20 @@ function [pRDM,nRDM] = filter_RDM(RDM)
    new = rot*AB*rot';
    nRDM(7,7) = new(1,1);
    nRDM(10,10) = new(2,2);
-   %
    pRDM = nRDM;
    % Restore the pair-hopping terms
    pRDM(6,11) = RDM(6,11);
    pRDM(11,6) = RDM(11,6);
    % Rotate the pair-hopping terms
-   aa = nRDM(6,6);
-   bb = nRDM(11,11);
-   ab = nRDM(6,11);
-   ba = nRDM(11,6);
+   aa = pRDM(6,6);
+   bb = pRDM(11,11);
+   ab = pRDM(6,11);
+   ba = pRDM(11,6);
    AB = [aa,ab;ba,bb];
    rot = [1,-1; 1,1]./sqrt(2);
    new = rot*AB*rot';
-   nRDM(6,6) = new(1,1);
-   nRDM(11,11) = new(2,2);
-   % Global singlet assertion
-   assert(all(abs(RDM(4,4)-RDM(13,13))<1e-12))
-   % Particle-hole symmetry assertion
-   assert(all(abs(RDM(1,1)-RDM(16,16))<1e-4))
+   pRDM(6,6) = new(1,1);
+   pRDM(11,11) = new(2,2);
 end
 
 %% FROM ED_SETUP:
