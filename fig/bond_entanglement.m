@@ -9,14 +9,16 @@ cd('../../Data/CDMFT/4sites2replicas/')
 
 Uloc = load('U_list.txt');
 
-s1 = QcmP.post.eentropy_line('1sites');
-s2 = QcmP.post.eentropy_line('2sites');
+s1 = QcmP.post.eentropy_line('U','1sites');
+s2 = QcmP.post.eentropy_line('U','2sites');
 
 MI =  2.*s1 - s2;
 
 print_basis
 
 [pSSR,nSSR] = build_SSRs();
+
+[logN,N] = get_negativities();
 
 cd(HERE)
 
@@ -29,8 +31,10 @@ plot(Uloc,s1,':','LineWidth',1.5,'Color',str2rgb('matlab4'))
 hold on
 % Upper bound on bond entanglement (bond mutual information)
 plot(Uloc,MI,'-.','LineWidth',1.5,'Color',str2rgb('pyplot3'))
+% Upper bound on bond entanglement (bond logarithmic negativity)
+plot(Uloc,logN,'--','LineWidth',2.5,'Color',str2rgb('goldenrod'))
 % Filling area between the bounds (entanglement interval...)
-fill([Uloc;flipud(Uloc)],[nSSR;flipud(MI)],str2rgb("light khaki"),...
+fill([Uloc;flipud(Uloc)],[pSSR;flipud(logN)],str2rgb("light khaki"),...
     'EdgeColor','none')
 % Lower bound on bond entanglement (meaningful entanglement)
 plot(Uloc,nSSR,'-','LineWidth',1.5,'Color',str2rgb('Neon Blue'))
@@ -44,6 +48,7 @@ ylabel("Units of $\log(2)$")
 
 legend(["$s_i$",...
         "$I_{\langle ij \rangle}$",...
+        "$N_{\langle ij \rangle}$",...
         "$E_{\langle ij \rangle}$",...
         "$E_{\langle ij \rangle}^\mathrm{N-SSR}$",...
         "$E_{\langle ij \rangle}^\mathrm{P-SSR}$",],...
@@ -51,10 +56,27 @@ legend(["$s_i$",...
 legend('boxoff')
 
 %% Export to TikZ
-matlab2tikz('bond_entanglement.tex','strict',true,...
-    'width','0.3\textwidth','height','0.7\textwidth')
+%matlab2tikz('bond_entanglement.tex','strict',true,...
+%    'width','0.3\textwidth','height','0.7\textwidth')
 
 %% Utilities
+
+function [E,N] = get_negativities()
+
+    [mold,UDIR] = QcmP.post.get_list('U');
+ 
+    RDMs = cell(size(mold)); 
+    E = zeros(size(mold));
+    N = zeros(size(mold));
+ 
+    for i = 1:length(mold)
+       cd(UDIR(i))
+       RDMs{i} = QcmP.post.get_Hloc('reduced_density_matrix_2sites.dat');
+       [E(i),N(i)] = negativity(RDMs{i});
+       cd('..')
+    end
+ 
+ end
 
 function [pE,nE] = build_SSRs()
 
@@ -175,3 +197,65 @@ end
    end
   end
 
+%% Compute negativity
+function [E,N] = negativity(RDMij)
+    % Preprocess the RDM
+    TiRDM = partial_transpose(RDMij);
+    % Get the eigenvalues
+    p = eig(TiRDM);
+    % Test for negativity
+    N = -sum(p(p<0));
+    % Measure the entanglement
+    E = log2(2*N+1);
+ end
+ %% Partial transpose on the "left" single site
+ function Ti_RDM_ij = partial_transpose(RDM_ij)
+    % HARDCODED MAGIC NUMBERS (we have a simple dimer)
+    Nlat = 2;
+    Norb = 1;
+    % Let's assert the RDM has the right dimensions
+    Nrdm = size(RDM_ij,1);
+    Nlso = Nlat*Norb*2;
+    Nrdm = 2^Nlso;
+    assert(all(size(RDM_ij)==[Nrdm,Nrdm]))
+    % Init the partial-transposed RDM to size(RDM)
+    Ti_RDM_ij = zeros(Nrdm,Nrdm);
+    % Rotate the RDM_ij to the proper block form
+    for i = 1:Nrdm
+       ket = fliplr(dec2bin(i-1,Nlso));
+       kup = ket(1:Nlat*Norb);
+       kdw = ket(Nlat*Norb+1:end);
+       for ik = 1:Nlso
+          if(mod(ik,2)==1)
+                ket(ik) = kup(round((ik+1)/2));
+          else
+                ket(ik) = kdw(round(ik/2));
+          end
+       end
+       newI = bin2dec(fliplr(ket))+1;
+       for j = 1:Nrdm
+             bra = fliplr(dec2bin(j-1,Nlso));
+             bup = bra(1:Nlat*Norb);
+             bdw = bra(Nlat*Norb+1:end);
+             for ik = 1:Nlso
+                if(mod(ik,2)==1)
+                   bra(ik) = bup(round((ik+1)/2));
+                else
+                   bra(ik) = bdw(round(ik/2));
+                end
+             end
+             newJ = bin2dec(fliplr(bra))+1;
+             % (i,j) ---> (newI,newJ)
+             Ti_RDM_ij(newI,newJ) = RDM_ij(i,j);
+       end
+    end
+    % Finally, the partial transpose on each "left site" block
+    N_1site = 4;
+    for i = 1:Nrdm/N_1site
+       for j = 1:Nrdm/N_1site
+          block = Ti_RDM_ij(1+(i-1)*N_1site:i*N_1site,1+(j-1)*N_1site:j*N_1site);
+          Ti_RDM_ij(1+(i-1)*N_1site:i*N_1site,1+(j-1)*N_1site:j*N_1site) = block';
+       end
+    end
+ end
+ 
