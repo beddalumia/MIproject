@@ -27,7 +27,7 @@ cd(HERE)
 
 %% Actual graphics
 
-plotDMFT.import_colorlab
+QcmP.plot.import_colorlab
 
 plot3(ones(size(Uloc)),Uloc,MI,...
     '.:','LineWidth',2,'MarkerSize',21,...

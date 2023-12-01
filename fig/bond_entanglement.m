@@ -9,8 +9,8 @@ cd('../../Data/CDMFT/4sites2replicas/')
 
 Uloc = load('U_list.txt');
 
-s1 = postDMFT.eentropy_line('1sites');
-s2 = postDMFT.eentropy_line('2sites');
+s1 = QcmP.post.eentropy_line('1sites');
+s2 = QcmP.post.eentropy_line('2sites');
 
 MI =  2.*s1 - s2;
 
@@ -22,7 +22,7 @@ cd(HERE)
 
 %% Actual graphics
 
-plotDMFT.import_colorlab
+QcmP.plot.import_colorlab
 
 % Local entropy as a upper bound for all 1-site correlation
 plot(Uloc,s1,':','LineWidth',1.5,'Color',str2rgb('matlab4'))
@@ -58,7 +58,7 @@ matlab2tikz('bond_entanglement.tex','strict',true,...
 
 function [pE,nE] = build_SSRs()
 
-   [mold,UDIR] = postDMFT.get_list('U');
+   [mold,UDIR] = QcmP.post.get_list('U');
 
    RDMs = cell(size(mold)); 
    nRDMs = RDMs; pRDMs = RDMs;
@@ -67,7 +67,7 @@ function [pE,nE] = build_SSRs()
 
    for i = 1:length(mold)
       cd(UDIR(i))
-      RDMs{i} = postDMFT.get_Hloc('reduced_density_matrix_2sites.dat');
+      RDMs{i} = QcmP.post.get_Hloc('reduced_density_matrix_2sites.dat');
       [pRDMs{i},nRDMs{i}] = filter_RDM(RDMs{i});
       nE(i) = build_nSSR(nRDMs{i});
       pE(i) = build_pSSR(pRDMs{i});

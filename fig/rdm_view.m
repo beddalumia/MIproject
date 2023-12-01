@@ -24,9 +24,9 @@ cd(sprintf('U=%f',str2double(Uloc)));
 
 % Invoke DMFT-LAB utilities
 rdm1 = figure("Name","Single Site RDM");
-plotDMFT.pure_states('1sites')
+QcmP.plot.pure_states('1sites')
 rdm2 = figure("Name","Nearest-Neighbor RDM");
-plotDMFT.pure_states('2sites')
+QcmP.plot.pure_states('2sites')
 % Reset to base directory
 cd(HERE)
 % Export to PDF a la Secli

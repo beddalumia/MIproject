@@ -28,7 +28,7 @@ RDM = postDMFT.get_Hloc('reduced_density_matrix_2sites.dat');
 cd(HERE)
 
 %% Actual Plotting
-plotDMFT.import_colorlab
+QcmP.plot.import_colorlab
 % Trick to enable clever multi-axes
 t = tiledlayout(1,1);
 % Full RDM

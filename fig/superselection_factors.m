@@ -23,7 +23,7 @@ cd(HERE)
 
 %% Actual graphics
 
-plotDMFT.import_colorlab
+QcmP.plot.import_colorlab
 
 figure("Name",'Plaquette Reducing Factors')
 

@@ -34,7 +34,7 @@ cd(HERE)
 
 %% Actual graphics
 
-plotDMFT.import_colorlab
+QcmP.plot.import_colorlab
 
 figure("Name",'Local Entropy Scaling')
 %plot(U2,S2,'-','LineWidth',1.5,'Color',str2rgb('fuchsia'))
