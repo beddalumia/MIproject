@@ -20,5 +20,5 @@
 	path = lib/edlat
 	url = https://github.com/QcmPlab/EDlattice.git
 [submodule "matlab2tikz"]
-	path = lib/matlab2tikz
+	path = lib/m2tex
 	url = https://github.com/matlab2tikz/matlab2tikz.git
