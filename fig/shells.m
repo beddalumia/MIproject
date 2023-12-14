@@ -1,5 +1,5 @@
-%set(0,'defaulttextinterpreter','latex')
-magicLaTeX;
+set(0,'defaulttextinterpreter','latex')
+%magicLaTeX;
 
 %% Data wrangling
 
@@ -18,8 +18,8 @@ cd('../../Data/CDMFT/4sites2replicas/')
 
 Uloc = load('U_list.txt');
 
-s1 = postDMFT.eentropy_line('1sites');
-s2 = postDMFT.eentropy_line('2sites');
+s1 = QcmP.post.eentropy_line('U','1sites');
+s2 = QcmP.post.eentropy_line('U','2sites');
 
 MI =  2.*s1 - s2;
 
@@ -56,22 +56,24 @@ xlabel("$d/a$")
 xlim([1,3.5])
 ylabel("$U/D$")
 ylim([0.25,7])
-zlabel("Units of $\log(2)$")
+zlabel("$I_{ij} / \log(2)$")
 zlim([0,1.2])
 
 view(50,36); grid on
 
-legend(["ED $2\times2$, $N_\mathrm{bath}=8$",...
-    "ASCI $4\times2$, $N_\mathrm{bath}=48$"],...
+legend(["$2\times2$, $N_\mathrm{bath}=08$ (ED)",...
+    "$4\times2$, $N_\mathrm{bath}=48$ (ASCI)"],...
     'Location','best',...
     'Interpreter','latex')
 
 %% Save to PDF
-set(gcf,'Renderer','painters');
-saveFigureAsPDF(gcf,'shells.pdf');
+%set(gcf,'Renderer','painters');
+%saveFigureAsPDF(gcf,'shells.pdf');
 
 %% Export to TikZ
+addpath([HERE,'/../lib/m2tex/src']);
 matlab2tikz('shells.tex','strict',true,'noSize',true)
+rmpath([HERE,'/../lib/m2tex/src']);
 
 %% Clear Secli's black magic
-clear magicLaTeX; 
+%clear magicLaTeX; 

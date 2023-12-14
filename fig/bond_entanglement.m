@@ -56,8 +56,10 @@ legend(["$s_i$",...
 legend('boxoff')
 
 %% Export to TikZ
-%matlab2tikz('bond_entanglement.tex','strict',true,...
-%    'width','0.3\textwidth','height','0.7\textwidth')
+addpath([HERE,'/../lib/m2tex/src']);
+matlab2tikz('bond_entanglement.tex','strict',true,...
+    'width','0.3\textwidth','height','0.7\textwidth')
+rmpath([HERE,'/../lib/m2tex/src']);
 
 %% Utilities
 

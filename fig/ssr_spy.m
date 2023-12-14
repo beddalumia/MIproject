@@ -7,7 +7,7 @@ HERE = erase(filepath,name);
 
 cd('../../Data/CDMFT/4sites2replicas')
 
-Ulist = postDMFT.get_list('U');
+Ulist = QcmP.post.get_list('U');
 
 Uloc=input('Which value of U? ','s');
 
@@ -21,7 +21,7 @@ cd(sprintf('U=%f',str2double(Uloc)));
 
 [bras,kets] = basis_labels;
 
-RDM = postDMFT.get_Hloc('reduced_density_matrix_2sites.dat');
+RDM = QcmP.post.get_Hloc('reduced_density_matrix_2sites.dat');
 
 [pRDM,nRDM] = filter_RDM(RDM);
 

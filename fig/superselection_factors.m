@@ -8,8 +8,8 @@ HERE = erase(filepath,name);
 cd('../../Data/CDMFT/4sites2replicas/')
 
 Uloc = load('U_list.txt');
-S1 = postDMFT.eentropy_line('1sites');
-S2 = postDMFT.eentropy_line('2sites');
+S1 = QcmP.post.eentropy_line('U','1sites');
+S2 = QcmP.post.eentropy_line('U','2sites');
 
 Ifull =  2.*S1 - S2;
 
@@ -53,7 +53,7 @@ plot(Uloc,S1./pSSR_S1,'--','LineWidth',1.5,'Color',str2rgb('Hot Pink'))
 xlim([0,3])
 ylim([1,11])
 xlabel("$U/D$")
-ylabel("Superselection Divisor")
+ylabel("Superselection Factor")
 legend(["N-SSR","P-SSR"],'Location','northwest')
 legend('boxoff')
 
@@ -69,14 +69,16 @@ legend(["N-SSR","P-SSR"],'Location','northeast')
 legend('boxoff')
 
 %% Export to TikZ
+addpath([HERE,'/../lib/m2tex/src']);
 matlab2tikz('superselection.tex','strict',true,...
     'width','0.4\textwidth','height','0.6\textwidth')
+rmpath([HERE,'/../lib/m2tex/src']);
 
 %% Utilities
 
 function [pEE,nEE] = build_SSRs_S(fullEE)
 
-   [pmold,UDIR] = postDMFT.get_list('U');
+   [pmold,UDIR] = QcmP.post.get_list('U');
 
    p1 = zeros(size(pmold));
    p2 = zeros(size(pmold));
@@ -101,7 +103,7 @@ end
 
 function [pMI,nMI] = build_SSRs_I(S1,S2)
 
-   [mold,UDIR] = postDMFT.get_list('U');
+   [mold,UDIR] = QcmP.post.get_list('U');
 
    RDMs = cell(size(mold)); 
    nRDMs = RDMs; pRDMs = RDMs;
@@ -110,7 +112,7 @@ function [pMI,nMI] = build_SSRs_I(S1,S2)
 
    for i = 1:length(mold)
       cd(UDIR(i))
-      RDMs{i} = postDMFT.get_Hloc('reduced_density_matrix_2sites.dat');
+      RDMs{i} = QcmP.post.get_Hloc('reduced_density_matrix_2sites.dat');
       [pRDMs{i},nRDMs{i}] = filter_RDM(RDMs{i});
       pS2(i) = vonNeumann(pRDMs{i});
       nS2(i) = vonNeumann(nRDMs{i});
@@ -137,7 +139,7 @@ end
 
 function E = vonNeumann(RDM)
    p = eig(RDM);
-   E = -sum(real(p.*log2(p)));
+   E = -sum(p.*log2(p));
 end
 
 %% FROM ED_SETUP:
