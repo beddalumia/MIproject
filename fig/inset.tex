@@ -1,0 +1,164 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.01569,0.85098,1.00000}%
+\definecolor{mycolor2}{rgb}{1.00000,0.00784,0.55294}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=0.282\textwidth,
+height=2\textwidth,
+at={(0\textwidth,0\textwidth)},
+scale only axis,
+separate axis lines,
+every outer x axis line/.append style={white!15!black},
+every x tick label/.append style={font=\color{white!15!black}},
+every x tick/.append style={white!15!black},
+xmode=log,
+xmin=0,
+xmax=8,
+xtick={0.1,1},
+xticklabels={{1E-1},{1E0}},
+xminorticks=true,
+minor x tick num={3},
+xlabel style={font=\color{white!15!black}},
+xlabel={$U/D$},
+every outer y axis line/.append style={white!15!black},
+every y tick label/.append style={font=\color{white!15!black}},
+every y tick/.append style={white!15!black},
+ymode=log,
+ymin=5e-05,
+ymax=0.25,
+ytick={0.0001,0.001,0.01,0.1},
+yticklabels={{1E-4},{1E-3},{1E-2},{1E-1}},
+yminorticks=true,
+minor y tick num={3},
+ylabel style={font=\color{white!15!black}},
+ylabel={Units of $\log(2)$},
+axis background/.style={fill=white},
+axis on top,
+legend style={at={(0.648,0.199)}, anchor=south west, legend cell align=left, align=left, fill=none, draw=none}
+]
+\addplot [color=mycolor1, line width=1.5pt]
+  table[row sep=crcr]{%
+0	0.000917116372944492\\
+0.1	0.000413269515220954\\
+0.2	0.000284043744416119\\
+0.3	0.000193659252568376\\
+0.4	0.000135144682657466\\
+0.5	9.99796410041526e-05\\
+0.6	8.39934597947232e-05\\
+0.7	8.57555878403153e-05\\
+0.8	0.000107698456512898\\
+0.9	0.000161187091698439\\
+1	0.000268570332750854\\
+1.1	0.000474341304398157\\
+1.2	0.000862772813602881\\
+1.3	0.00160611675429449\\
+1.4	0.00312275979168346\\
+1.5	0.00695629634884147\\
+1.6	0.156498911049276\\
+1.7	0.163228661396814\\
+1.8	0.16852365159957\\
+1.9	0.172127128591959\\
+2	0.17478222385516\\
+2.1	0.176908980161877\\
+2.2	0.17846477821334\\
+2.3	0.179599755833865\\
+2.4	0.180846945686049\\
+2.5	0.181667658075124\\
+2.6	0.182429188943521\\
+2.7	0.183007613897766\\
+2.8	0.183531305177019\\
+2.9	0.183999698435838\\
+3	0.184359378757665\\
+3.5	0.185741711247936\\
+4	0.186526585990065\\
+4.5	0.187038556050244\\
+5	0.187378687291751\\
+5.5	0.187624445837483\\
+6	0.18780571458154\\
+6.5	0.187945552718925\\
+7	0.188053093750115\\
+7.5	0.188142845945305\\
+8	0.18821303507174\\
+};
+\addlegendentry{$E_{\langle ij \rangle}^\mathrm{N-SSR}$}
+
+\addplot [color=mycolor2, dashed, line width=1.5pt]
+  table[row sep=crcr]{%
+0	0.00183422623772284\\
+0.1	0.0012148415083425\\
+0.2	0.00137522997569508\\
+0.3	0.00163619068959814\\
+0.4	0.00199422949693472\\
+0.5	0.00243682233584093\\
+0.6	0.00296207895040477\\
+0.7	0.00356882173617505\\
+0.8	0.00425730922827349\\
+0.9	0.00504189843931224\\
+1	0.00594777984079175\\
+1.1	0.0070323040143401\\
+1.2	0.0084059217268386\\
+1.3	0.0102900546200969\\
+1.4	0.0132123195615242\\
+1.5	0.0190825220205921\\
+1.6	0.182081963238387\\
+1.7	0.18888244749534\\
+1.8	0.193858851383634\\
+1.9	0.196776758533364\\
+2	0.198578312753291\\
+2.1	0.199799162512398\\
+2.2	0.200381140113695\\
+2.3	0.200520184631663\\
+2.4	0.200850355271716\\
+2.5	0.200737270454476\\
+2.6	0.200613365406408\\
+2.7	0.200333572864192\\
+2.8	0.200045651707567\\
+2.9	0.199745777335793\\
+3	0.199372170275819\\
+3.5	0.197676805628899\\
+4	0.196161022430804\\
+4.5	0.194941408787655\\
+5	0.193958225115112\\
+5.5	0.193176269749008\\
+6	0.192546635120041\\
+6.5	0.192037090625801\\
+7	0.19161754044925\\
+7.5	0.19127412626945\\
+8	0.190984451080154\\
+};
+\addlegendentry{$E_{\langle ij \rangle}^\mathrm{P-SSR}$}
+
+\end{axis}
+
+\begin{axis}[%
+width=0.373\textwidth,
+height=2.488\textwidth,
+at={(-0.056\textwidth,-0.302\textwidth)},
+scale only axis,
+every outer x axis line/.append style={white!15!black},
+every x tick label/.append style={font=\color{white!15!black}},
+every x tick/.append style={white!15!black},
+xmin=0,
+xmax=1,
+xtick={0,0.2,0.4,0.6,0.8,1},
+every outer y axis line/.append style={white!15!black},
+every y tick label/.append style={font=\color{white!15!black}},
+every y tick/.append style={white!15!black},
+ymin=0,
+ymax=1,
+ytick={0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1},
+axis line style={draw=none},
+ticks=none,
+axis x line*=bottom,
+axis y line*=left,
+axis on top
+]
+\end{axis}
+\end{tikzpicture}%
