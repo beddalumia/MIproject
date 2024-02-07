@@ -21,6 +21,7 @@ test*/
 *.png
 *.svg
 *.pdf
+*.fig
 
 # Log files...
 
@@ -87,3 +88,30 @@ octave-workspace
 
 # Added: we don't want to save .mat data
 *.mat
+
+### LaTeX #############################################################
+
+# LaTeX temporary files
+*.aux
+*.log
+*.toc
+
+# PDF output - usually a bad idea to keep this in Git
+*.pdf
+
+# Latexmk
+*.fdb_latexmk
+*.fls
+
+# SyncTeX
+*.synctex.gz
+
+# LaTeX Beamer
+*.snm
+*.vrb
+*.nav
+*.out
+
+# BibTeX
+*.bbl
+*.blg
