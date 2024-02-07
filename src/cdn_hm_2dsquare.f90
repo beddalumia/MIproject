@@ -107,7 +107,7 @@ program cdn_hm_2dsquare
    endif
 
    !SETUP BATH & SOLVER
-   call ed_set_Hreplica(Hsym_basis,lambdasym_vectors)
+   call ed_set_Hbath(Hsym_basis,lambdasym_vectors)
    Nb=ed_get_bath_dimension(Hsym_basis)
    allocate(bath(Nb))
    allocate(bath_prev(Nb))
@@ -486,7 +486,7 @@ contains
       foutput = "probabilities_"//str(Nsites)//"sites"//".dat"
       open(unit,file=foutput,action="write",position="rewind",status='unknown')
       do iii=1,4**(Nsites*Norb)
-         if(ed_verbose>1) write(LOGfile,"(90(F15.5,1X))") abs(pure_prob(iii))
+         if(ed_verbose>1) write(LOGfile,"(*(F20.16,1X))") abs(pure_prob(iii))
          write(unit,*) abs(pure_prob(iii)) !Machine zero could be negative.
       enddo
       close(unit)
@@ -496,7 +496,7 @@ contains
       foutput = "pure-states_"//str(Nsites)//"sites"//".dat"
       open(unit,file=foutput,action="write",position="rewind",status='unknown')
       do iii=1,4**(Nsites*Norb)
-         if(ed_verbose>3) write(LOGfile,"(90(F15.5,1X))") (dreal(pure_cvec(jjj,iii)), jjj=1,4**(Nsites*Norb))
+         if(ed_verbose>3) write(LOGfile,"(*(F20.16,1X))") (dreal(pure_cvec(jjj,iii)), jjj=1,4**(Nsites*Norb))
          write(unit,*) (dreal(pure_cvec(jjj,iii)), jjj=1,4**(Nsites*Norb)) !Our states should be real.
       enddo
       close(unit)
@@ -511,20 +511,24 @@ contains
       real(8),allocatable,dimension(:)          :: pure_prob
       real(8)                                   :: entropy,p
       integer                                   :: Nsites
-      integer                                   :: unit
+      integer                                   :: rewind_unit,append_unit
       !
       if(ed_verbose>0) write(LOGfile,*) "> ENTANGLEMENT ENTROPY:"
       entropy = zero
-      unit = free_unit()
       foutput = "eentropy_"//str(Nsites)//"sites"//".dat"
-      open(unit,file=foutput,action="write",position="rewind",status='unknown')
+      append_unit = free_unit()
+      open(append_unit,file="all_"//foutput,action="write",position="append",status='unknown')
+      rewind_unit = free_unit()
+      open(rewind_unit,file=foutput,action="write",position="rewind",status='unknown')
       do iii=1,4**(Nsites*Norb)
          p = abs(pure_prob(iii)) !Machine zero could be negative.
          entropy = entropy - p*log(p)/log(2d0)
       enddo
-      if(ed_verbose>0) write(LOGfile,"(90(F15.5,1X))") entropy
-      write(unit,*) entropy
-      close(unit)
+      if(ed_verbose>0) write(LOGfile,"(*(F20.16,1X))") entropy
+      write(append_unit,*) entropy
+      write(rewind_unit,*) entropy
+      close(append_unit)
+      close(rewind_unit)
       !
    end subroutine print_entropy
 
