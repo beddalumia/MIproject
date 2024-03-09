@@ -8,7 +8,7 @@ HERE = erase(filepath,name);
 
 cd('../../Data/CDMFT/4sites2replicas/')
 
-Ulist = postDMFT.get_list('U');
+Ulist = QcmP.post.get_list('U');
 
 Uloc=input('Which value of U? ','s');
 
@@ -26,7 +26,9 @@ cd(sprintf('U=%f',str2double(Uloc)));
 rdm1 = figure("Name","Single Site RDM");
 QcmP.plot.pure_states('1sites')
 rdm2 = figure("Name","Nearest-Neighbor RDM");
-QcmP.plot.pure_states('2sites')
+QcmP.plot.pure_states('2sites',1)
+% rdm4 = figure("Name","Plaquette RDM");
+% QcmP.plot.pure_states('4sites')
 % Reset to base directory
 cd(HERE)
 % Export to PDF a la Secli
@@ -34,6 +36,8 @@ set(rdm1,'Renderer','painters');
 saveFigureAsPDF(rdm1,'rdm1.pdf');
 set(rdm2,'Renderer','painters');
 saveFigureAsPDF(rdm2,'rdm2.pdf');
+% set(rdm4,'Renderer','painters');
+% saveFigureAsPDF(rdm4,'rdm4.pdf');
 
 %% Reset Secli's black magic
 clear magicLaTeX; 

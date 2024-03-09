@@ -3,8 +3,8 @@
 %The latest updates can be retrieved from
 %  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
 %where you can also make suggestions and rate matlab2tikz.
-  %
-  \definecolor{mycolor1}{rgb}{0.80780,0.63530,0.99220}%
+%
+\definecolor{mycolor1}{rgb}{0.80780,0.63530,0.99220}%
 \definecolor{mycolor2}{rgb}{0.49400,0.18400,0.55600}%
 \definecolor{mycolor3}{rgb}{1.00000,0.49804,0.05490}%
 \definecolor{mycolor4}{rgb}{0.00000,0.64314,0.93725}%
@@ -14,6 +14,7 @@
 \begin{tikzpicture}
 
 \begin{axis}[%
+width=.7\textwidth,
 separate axis lines,
 every outer x axis line/.append style={white!15!black},
 every x tick label/.append style={font=\color{white!15!black}},
@@ -31,10 +32,10 @@ ymax=2,
 ytick={1,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2},
 yticklabel style={/pgf/number format/.cd,fixed zerofill,precision=1},
 ylabel style={font=\color{white!15!black}},
-ylabel={$s_i/\log(2)$},
-axis background/.style={fill=white},
+ylabel={$s_i$ [bit]},
+axis background/.style={fill=none},
 axis on top,
-legend style={legend cell align=left, align=left, fill=none, draw=none}
+legend style={legend cell align=left, align=left, fill=none, draw=none,at={(axis cs:2.5,1.47)},anchor=south west, fill=none}
 ]
 \addplot [color=mycolor1, line width=1.5pt, mark size=4.0pt, mark=Mercedes star, mark options={solid, mycolor1}]
 table[row sep=crcr]{%

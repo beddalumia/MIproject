@@ -10,7 +10,7 @@ cd('../../Data/CDMFT/Carlos/LATEST/')
 
 tabs = readtable('4x2_dimer_MIs.dat');
 uloc = tabs.Var1; dist = [1,sqrt(2),2,sqrt(5),3,sqrt(10)];
-data = table2array(tabs); data = data(:,2:end);
+data = table2array(tabs); data = data(:,2:end-1);
 
 cd(HERE)
 
@@ -35,7 +35,7 @@ plot3(ones(size(Uloc)),Uloc,MI,...
 
 hold on
 
-for i = 1:length(dist)
+for i = 1:length(dist)-1
     plot3(ones(size(uloc))*dist(i),uloc,data(:,i),...
         '*','MarkerSize',13,'LineWidth',2,...
         'Color',str2rgb('pyplot3'));
@@ -44,7 +44,7 @@ for i = 1:length(dist)
         'Color',str2rgb('pyplot3'));
 end
 
-[X,Y] = meshgrid(uloc,dist);
+[X,Y] = meshgrid(uloc,dist(1:end-1));
 wplot = waterfall(Y,X,data');
 
 wplot.FaceColor = str2rgb("light khaki");

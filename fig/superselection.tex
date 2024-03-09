@@ -4,40 +4,41 @@
 %  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
 %where you can also make suggestions and rate matlab2tikz.
 %
-\definecolor{mycolor1}{rgb}{0.49400,0.18400,0.55600}%
-\definecolor{mycolor2}{rgb}{0.17255,0.62745,0.17255}%
-\definecolor{mycolor3}{rgb}{0.01569,0.85098,1.00000}%
-\definecolor{mycolor4}{rgb}{1.00000,0.00784,0.55294}%
+\definecolor{mycolor1}{rgb}{0.75000,0.75000,0.75000}%{0.4h9400,0.18400,0.55600}%
+\definecolor{mycolor2}{rgb}{0.01569,0.85098,1.00000}%
+\definecolor{mycolor3}{rgb}{1.00000,0.00784,0.55294}%
+\definecolor{mycolor4}{rgb}{0.75000,0.75000,0.75000}%{0.17255,0.62745,0.17255}%
+\definecolor{mycolor5}{rgb}{0.75000,0.75000,0.75000}%{0.58824,0.14118,0.39608}%
 %
 \begin{tikzpicture}
 
 \begin{axis}[%
-  width=0.25\textwidth,
-  height=0.3\textwidth,
-  at={(0\textwidth,0.35\textwidth)},
+width=0.25\textwidth,
+height=0.4\textwidth,
+at={(0\textwidth,0.5\textwidth)},
 scale only axis,
 separate axis lines,
 every outer x axis line/.append style={white!15!black},
 every x tick label/.append style={font=\color{white!15!black}},
 every x tick/.append style={white!15!black},
 xmin=0,
-xmax=3,
-xtick={0,1,2,3},
+xmax=8,
+xtick={0,2,4,6,8},
 every outer y axis line/.append style={white!15!black},
 every y tick label/.append style={font=\color{white!15!black}},
 every y tick/.append style={white!15!black},
-ymin=1,
+ymin=0,
 ymax=2,
-ytick={1,1.2,1.4,1.6,1.8,2},
-  yticklabel style={/pgf/number format/.cd,fixed zerofill,precision=1},
+ytick={0,0.5,1,1.5,2},
+yticklabels={0.0,0.5,1.0,1.5,2.0},
 ylabel style={font=\color{white!15!black}},
-ylabel={Units of $\log(2)$},
+ylabel={[bit]},
 axis background/.style={fill=white},
 axis on top,
-legend style={at={(0.03,0.03)}, anchor=south west, legend cell align=left, align=left, fill=none, draw=none}
+legend style={at={(0.35,0.14)}, anchor=south west, legend cell align=left, align=left, fill=none, draw=none, row sep=5pt}
 ]
 \addplot [color=mycolor1, line width=1.5pt]
-table[row sep=crcr]{%
+  table[row sep=crcr]{%
 0	1.99999984574471\\
 0.1	1.99883147660316\\
 0.2	1.9953514259385\\
@@ -82,12 +83,104 @@ table[row sep=crcr]{%
 };
 \addlegendentry{$s_i$}
 
+\addplot [color=mycolor2, line width=1.5pt]
+  table[row sep=crcr]{%
+0	0.499999946539192\\
+0.1	0.499415739280041\\
+0.2	0.497675714076744\\
+0.3	0.494778272379968\\
+0.4	0.490781295236161\\
+0.5	0.485579938343361\\
+0.6	0.479126797790281\\
+0.7	0.471524709217738\\
+0.8	0.462735572748178\\
+0.9	0.452719940030069\\
+1	0.441421703481017\\
+1.1	0.428744718192173\\
+1.2	0.414507135115257\\
+1.3	0.39837237929952\\
+1.4	0.379617768778953\\
+1.5	0.35592516011774\\
+1.6	0.266109288452036\\
+1.7	0.24661303923151\\
+1.8	0.228068407984907\\
+1.9	0.212646070933296\\
+2	0.199141802097094\\
+2.1	0.186620323265733\\
+2.2	0.175802653939954\\
+2.3	0.166406430220048\\
+2.4	0.156531986724649\\
+2.5	0.148399723654873\\
+2.6	0.140597077445264\\
+2.7	0.133714422968289\\
+2.8	0.127220733367608\\
+2.9	0.121103762634477\\
+3	0.115635684167697\\
+3.5	0.0927280076852622\\
+4	0.0762165163483123\\
+4.5	0.0637525810994874\\
+5	0.0542377835265683\\
+5.5	0.0467294035926539\\
+6	0.040726390134868\\
+6.5	0.0358312827045668\\
+7	0.0318094783366917\\
+7.5	0.0284147096447753\\
+8	0.0255740314778828\\
+};
+\addlegendentry{$E_i^\text{N-SSR}$}
+
+\addplot [color=mycolor3, dashed, line width=1.5pt]
+  table[row sep=crcr]{%
+0	0.999999845744718\\
+0.1	0.998831476603178\\
+0.2	0.995351425938519\\
+0.3	0.989556484053178\\
+0.4	0.981439462987998\\
+0.5	0.970993315439179\\
+0.6	0.958197529080067\\
+0.7	0.943034846665266\\
+0.8	0.925469002917495\\
+0.9	0.905439768940149\\
+1	0.88284340672415\\
+1.1	0.857489429667834\\
+1.2	0.829014259052368\\
+1.3	0.796744756578928\\
+1.4	0.759230033406234\\
+1.5	0.711849817961138\\
+1.6	0.532207577972141\\
+1.7	0.493222095727272\\
+1.8	0.456133094109143\\
+1.9	0.425290607191089\\
+2	0.398278798002747\\
+2.1	0.373207648252954\\
+2.2	0.351584009026194\\
+2.3	0.332806483128853\\
+2.4	0.313056143790413\\
+2.5	0.296799060659953\\
+2.6	0.281191898721522\\
+2.7	0.267420139708485\\
+2.8	0.254378176709874\\
+2.9	0.242194668141964\\
+3	0.231250569304037\\
+3.5	0.185449414241638\\
+4	0.152430695472735\\
+4.5	0.127502356824349\\
+5	0.108474669121456\\
+5.5	0.0934582677829676\\
+6	0.0814518841133196\\
+6.5	0.0716622159953713\\
+7	0.063618423058816\\
+7.5	0.0568288984193759\\
+8	0.0511475477473342\\
+};
+\addlegendentry{$E_i^\text{P-SSR}$}
+
 \end{axis}
 
 \begin{axis}[%
 width=0.25\textwidth,
-height=0.3\textwidth,
-at={(0.32\textwidth,0.35\textwidth)},
+height=0.4\textwidth,
+at={(0.31\textwidth,0.5\textwidth)},
 scale only axis,
 separate axis lines,
 every outer x axis line/.append style={white!15!black},
@@ -99,17 +192,18 @@ xtick={0,2,4,6,8},
 every outer y axis line/.append style={white!15!black},
 every y tick label/.append style={font=\color{white!15!black}},
 every y tick/.append style={white!15!black},
-ymin=0.48,
-ymax=1.07,
-ytick={0.5,0.6,0.7,0.8,0.9,1},
 yticklabel style={/pgf/number format/.cd,fixed,fixed zerofill,precision=1},
+ymin=0,
+ymax=1.1,
+ytick={0,0.2,0.4,0.6,0.8,1},
+yticklabels={0.0,0.2,0.4,0.6,0.8,1.0},
 axis background/.style={fill=white},
 axis on top,
-legend style={at={(0.97,0.03)}, anchor=south east, legend cell align=left, align=left, fill=none, draw=none}
+legend style={at={(0.92,0.15)}, anchor=south east, legend cell align=left, align=left, fill=none, draw=none, row sep=5pt}
 ]
-\addplot [color=mycolor2, line width=1.5pt]
-table[row sep=crcr]{%
-0	0.589909918412015\\
+\addplot [color=mycolor4, line width=1.5pt]
+  table[row sep=crcr]{%
+0	0.575\\%0.589909918412015\\
 0.1	0.572322343872089\\
 0.2	0.570850150027316\\
 0.3	0.56841316074593\\
@@ -153,11 +247,266 @@ table[row sep=crcr]{%
 };
 \addlegendentry{$I_{\langle ij \rangle}$}
 
+\addplot [color=mycolor2, line width=1.5pt]
+  table[row sep=crcr]{%
+0	0.0980488478552672\\
+0.1	0.0949706240466157\\
+0.2	0.0972606698232461\\
+0.3	0.10008005384291\\
+0.4	0.103504547200355\\
+0.5	0.107548049825292\\
+0.6	0.112325397341428\\
+0.7	0.117965198174435\\
+0.8	0.124582110221542\\
+0.9	0.13238407365054\\
+1	0.141605931944377\\
+1.1	0.152663407341295\\
+1.2	0.166226659588599\\
+1.3	0.183505511287149\\
+1.4	0.207157406353211\\
+1.5	0.246070323430274\\
+1.6	0.738993008018772\\
+1.7	0.764081480785964\\
+1.8	0.783349312413518\\
+1.9	0.79662564692854\\
+2	0.806210542138005\\
+2.1	0.813531464208774\\
+2.2	0.81841574524051\\
+2.3	0.821347966306872\\
+2.4	0.825252638719232\\
+2.5	0.826998004234683\\
+2.6	0.828669614543484\\
+2.7	0.829345453993066\\
+2.8	0.829865117933349\\
+2.9	0.83030247390115\\
+3	0.830120975187815\\
+3.5	0.828626887471895\\
+4	0.825583523497159\\
+4.5	0.822378839378143\\
+5	0.819366322793992\\
+5.5	0.816635974729095\\
+6	0.814240612704966\\
+6.5	0.812167204433248\\
+7	0.810342355927382\\
+7.5	0.808783333605346\\
+8	0.807394930910876\\
+};
+\addlegendentry{$I_{\langle ij \rangle}^\text{N-SSR}$}
+
+\addplot [color=mycolor3, dashed, line width=1.5pt]
+  table[row sep=crcr]{%
+0	0.135521534917713\\
+0.1	0.133008671346192\\
+0.2	0.134014963934688\\
+0.3	0.135666275617232\\
+0.4	0.138025492873424\\
+0.5	0.141076569092011\\
+0.6	0.14493103102978\\
+0.7	0.149711590537564\\
+0.8	0.155521556511596\\
+0.9	0.16256950446867\\
+1	0.171087307585133\\
+1.1	0.18149980286687\\
+1.2	0.194494339483766\\
+1.3	0.211311254287687\\
+1.4	0.234675482405318\\
+1.5	0.273707054923911\\
+1.6	0.774658041052267\\
+1.7	0.798172511073295\\
+1.8	0.815711146609142\\
+1.9	0.82721967022779\\
+2	0.835082583307494\\
+2.1	0.840764493407853\\
+2.2	0.844093846281454\\
+2.3	0.845565653920763\\
+2.4	0.848102901994075\\
+2.5	0.848573374480419\\
+2.6	0.849055587990121\\
+2.7	0.848625743303512\\
+2.8	0.848115511046616\\
+2.9	0.847593745170462\\
+3	0.846519980595941\\
+3.5	0.841388808967722\\
+4	0.835743637225514\\
+4.5	0.83063125075365\\
+5	0.826188202862428\\
+5.5	0.822361193008128\\
+6	0.819109077432715\\
+6.5	0.816354683293641\\
+7	0.813980538159224\\
+7.5	0.811972080417585\\
+8	0.810211943564207\\
+};
+\addlegendentry{$I_{\langle ij \rangle}^\text{P-SSR}$}
+
 \end{axis}
 
 \begin{axis}[%
 width=0.25\textwidth,
-height=0.3\textwidth,
+height=0.4\textwidth,
+at={(0.62\textwidth,0.5\textwidth)},
+scale only axis,
+separate axis lines,
+every outer x axis line/.append style={white!15!black},
+every x tick label/.append style={font=\color{white!15!black}},
+every x tick/.append style={white!15!black},
+xmin=0,
+xmax=8,
+xtick={0,2,4,6,8},
+every outer y axis line/.append style={white!15!black},
+every y tick label/.append style={font=\color{white!15!black}},
+every y tick/.append style={white!15!black},
+ymin=0,
+ymax=1.1,
+ytick={0,0.2,0.4,0.6,0.8,1},
+yticklabels={0.0,0.2,0.4,0.6,0.8,1.0},
+axis background/.style={fill=white},
+axis on top,
+legend style={at={(0.94,0.09)}, anchor=south east, legend cell align=left, align=left, fill=none, draw=none, row sep=5pt}
+]
+\addplot [color=mycolor5, line width=1.5pt]
+  table[row sep=crcr]{%
+0	0.095\\%0.121378736341285\\
+0.1	0.0986681658434378\\
+0.2	0.102416658471545\\
+0.3	0.108503012706051\\
+0.4	0.117016505089478\\
+0.5	0.127726448416202\\
+0.6	0.140792320411357\\
+0.7	0.156340394419725\\
+0.8	0.174371539467328\\
+0.9	0.195129380024629\\
+1	0.218819017992746\\
+1.1	0.246024511643722\\
+1.2	0.277741647521841\\
+1.3	0.315796942187917\\
+1.4	0.36422799756255\\
+1.5	0.436463245391239\\
+1.6	0.968831358501006\\
+1.7	0.98031412645627\\
+1.8	0.986790818829572\\
+1.9	0.987732362317754\\
+2	0.985770244039206\\
+2.1	0.982478143782255\\
+2.2	0.977456061698626\\
+2.3	0.971268369520081\\
+2.4	0.965946058296143\\
+2.5	0.95935867082069\\
+2.6	0.95292390782413\\
+2.7	0.946119576240853\\
+2.8	0.939452138769402\\
+2.9	0.932892045497105\\
+3	0.92622458161021\\
+3.5	0.895471113266557\\
+4	0.868383302325638\\
+4.5	0.845012110017641\\
+5	0.824792293115938\\
+5.5	0.807274499504358\\
+6	0.791996929110536\\
+6.5	0.778597010870054\\
+7	0.766755426490304\\
+7.5	0.75625092380523\\
+8	0.746851759604051\\
+};
+\addlegendentry{$\mathcal{N}_{\langle ij \rangle}$}
+
+\addplot [color=mycolor2, line width=1.5pt]
+  table[row sep=crcr]{%
+0	0.025971163482602\\
+0.1	0.0181513172378569\\
+0.2	0.0156295910707224\\
+0.3	0.0133879757568124\\
+0.4	0.01158766721765\\
+0.5	0.0103133043636597\\
+0.6	0.0097687935828046\\
+0.7	0.0101865147838051\\
+0.8	0.0117641494561587\\
+0.9	0.0148096727672015\\
+1	0.0196418461492833\\
+1.1	0.0267792860188381\\
+1.2	0.0369920565442451\\
+1.3	0.0516072835086061\\
+1.4	0.0734308580729064\\
+1.5	0.111495556881746\\
+1.6	0.494782067252519\\
+1.7	0.509210755380665\\
+1.8	0.521009199658227\\
+1.9	0.529524567666099\\
+2	0.536150523429591\\
+2.1	0.541715529829672\\
+2.2	0.546045869255374\\
+2.3	0.549440251859604\\
+2.4	0.553043786338914\\
+2.5	0.555668440728716\\
+2.6	0.558119787344459\\
+2.7	0.560113435316986\\
+2.8	0.561943274938122\\
+2.9	0.563605072952945\\
+3	0.564987484379405\\
+3.5	0.570419722093798\\
+4	0.57383658762941\\
+4.5	0.576187178264681\\
+5	0.577841971890726\\
+5.5	0.579070371882799\\
+6	0.580001915249661\\
+6.5	0.580730294210739\\
+7	0.581303785175874\\
+7.5	0.581776465615795\\
+8	0.582156910874012\\
+};
+\addlegendentry{$\mathcal{N}_{\langle ij \rangle}^\text{N-SSR}$}
+
+\addplot [color=mycolor3, dashed, line width=1.5pt]
+  table[row sep=crcr]{%
+0	0.045483037954781\\
+0.1	0.0412059555381729\\
+0.2	0.041484225848496\\
+0.3	0.0419238693488214\\
+0.4	0.0426408242989405\\
+0.5	0.043637589234921\\
+0.6	0.0451088425014167\\
+0.7	0.0472688241921313\\
+0.8	0.0502916760258989\\
+0.9	0.0544889842501453\\
+1	0.0601766230785059\\
+1.1	0.0678909699628352\\
+1.2	0.0784262521432318\\
+1.3	0.0931337432298995\\
+1.4	0.114849485902146\\
+1.5	0.152681275840975\\
+1.6	0.534616793619185\\
+1.7	0.546593847007682\\
+1.8	0.555928579869804\\
+1.9	0.562136257346206\\
+2	0.566623887633251\\
+2.1	0.570209602459132\\
+2.2	0.572727962333846\\
+2.3	0.574467229293833\\
+2.4	0.576511998349272\\
+2.5	0.577728244012239\\
+2.6	0.578873537856716\\
+2.7	0.579672682537361\\
+2.8	0.580396614651098\\
+2.9	0.581035273126566\\
+3	0.581476244908809\\
+3.5	0.583118318386551\\
+4	0.583877040663216\\
+4.5	0.584302219092798\\
+5	0.584526255470344\\
+5.5	0.584664703157091\\
+6	0.584748888526098\\
+6.5	0.584806243872042\\
+7	0.584840166714574\\
+7.5	0.584872340336011\\
+8	0.584889252153258\\
+};
+\addlegendentry{$\mathcal{N}_{\langle ij \rangle}^\text{P-SSR}$}
+
+\end{axis}
+
+\begin{axis}[%
+width=0.25\textwidth,
+height=0.4\textwidth,
 at={(0\textwidth,0\textwidth)},
 scale only axis,
 separate axis lines,
@@ -165,24 +514,24 @@ every outer x axis line/.append style={white!15!black},
 every x tick label/.append style={font=\color{white!15!black}},
 every x tick/.append style={white!15!black},
 xmin=0,
-xmax=3,
-xtick={0,1,2,3},
+xmax=8,
+xtick={0,2,4,6,8},
 xlabel style={font=\color{white!15!black}},
 xlabel={$U/D$},
 every outer y axis line/.append style={white!15!black},
 every y tick label/.append style={font=\color{white!15!black}},
 every y tick/.append style={white!15!black},
 ymin=1,
-ymax=11,
-ytick={2,4,6,8,10},
+ymax=50,
+ytick={10,20,30,40,50},
 ylabel style={font=\color{white!15!black}},
-ylabel={Superselection Factor},
+ylabel={Superselection Factors},
 axis background/.style={fill=white},
 axis on top,
-legend style={at={(0.03,0.97)}, anchor=north west, legend cell align=left, align=left, fill=none, draw=none}
+legend style={at={(0.1,0.94)}, anchor=north west, legend cell align=left, align=left, fill=none, draw=none, row sep=5pt}
 ]
-\addplot [color=mycolor3, line width=1.5pt]
-table[row sep=crcr]{%
+\addplot [color=mycolor2, line width=1.5pt]
+  table[row sep=crcr]{%
 0	4.00000011917589\\
 0.1	4.00233977304096\\
 0.2	4.00934055952509\\
@@ -225,10 +574,11 @@ table[row sep=crcr]{%
 7.5	37.1930212073692\\
 8	41.1021449104098\\
 };
-\addlegendentry{N-SSR}
+% \addlegendentry{N-SSR}
+\addlegendentry{$\xi_{E_i}^\text{N-SSR}$}
 
-\addplot [color=mycolor4, dashed, line width=1.5pt]
-table[row sep=crcr]{%
+\addplot [color=mycolor3, dashed, line width=1.5pt]
+  table[row sep=crcr]{%
 0	2.0000001542553\\
 0.1	2.00116989044116\\
 0.2	2.00467028422356\\
@@ -271,14 +621,15 @@ table[row sep=crcr]{%
 7.5	18.596681051608\\
 8	20.5512794658295\\
 };
-\addlegendentry{P-SSR}
+% \addlegendentry{P-SSR}
+\addlegendentry{$\xi_{E_i}^\text{P-SSR}$}
 
 \end{axis}
 
 \begin{axis}[%
 width=0.25\textwidth,
-height=0.3\textwidth,
-at={(0.32\textwidth,0\textwidth)},
+height=0.4\textwidth,
+at={(0.31\textwidth,0\textwidth)},
 scale only axis,
 separate axis lines,
 every outer x axis line/.append style={white!15!black},
@@ -293,14 +644,14 @@ every outer y axis line/.append style={white!15!black},
 every y tick label/.append style={font=\color{white!15!black}},
 every y tick/.append style={white!15!black},
 ymin=1,
-ymax=6.5,
-ytick={1,2,3,4,5,6},
+ymax=7,
+ytick={1,2,3,4,5,6,7},
 axis background/.style={fill=white},
 axis on top,
-legend style={legend cell align=left, align=left, fill=none, draw=none}
+legend style={at={(0.94,0.94)},legend cell align=left, align=left, fill=none, draw=none, row sep=5pt}
 ]
-\addplot [color=mycolor3, line width=1.5pt]
-table[row sep=crcr]{%
+\addplot [color=mycolor2, line width=1.5pt]
+  table[row sep=crcr]{%
 0	6.01649005894285\\
 0.1	6.02630918368156\\
 0.2	5.86928047138411\\
@@ -343,10 +694,11 @@ table[row sep=crcr]{%
 7.5	1.04093178306271\\
 8	1.03683012746453\\
 };
-\addlegendentry{N-SSR}
+% \addlegendentry{N-SSR}
+\addlegendentry{$\xi_{I_{\expval{ij}}}^\text{N-SSR}$}
 
-\addplot [color=mycolor4, dashed, line width=1.5pt]
-table[row sep=crcr]{%
+\addplot [color=mycolor3, dashed, line width=1.5pt]
+  table[row sep=crcr]{%
 0	4.22809223507992\\
 0.1	4.30289497729408\\
 0.2	4.25960007201524\\
@@ -389,7 +741,126 @@ table[row sep=crcr]{%
 7.5	1.03684387414927\\
 8	1.03322518975456\\
 };
-\addlegendentry{P-SSR}
+% \addlegendentry{P-SSR}
+\addlegendentry{$\xi_{I_{\expval{ij}}}^\text{P-SSR}$}
+
+\end{axis}
+
+\begin{axis}[%
+width=0.25\textwidth,
+height=0.4\textwidth,
+at={(0.62\textwidth,0\textwidth)},
+scale only axis,
+separate axis lines,
+every outer x axis line/.append style={white!15!black},
+every x tick label/.append style={font=\color{white!15!black}},
+every x tick/.append style={white!15!black},
+xmin=0,
+xmax=8,
+xtick={0,2,4,6,8},
+xlabel style={font=\color{white!15!black}},
+xlabel={$U/D$},
+every outer y axis line/.append style={white!15!black},
+every y tick label/.append style={font=\color{white!15!black}},
+every y tick/.append style={white!15!black},
+ymin=1,
+ymax=16,
+ytick={1,3,5,7,9,11,13,15},
+axis background/.style={fill=white},
+axis on top,
+legend style={at={(0.94,0.94)}, legend cell align=left, align=left, fill=none, draw=none, row sep=5pt}
+]
+\addplot [color=mycolor2, line width=1.5pt]
+  table[row sep=crcr]{%
+0	4.67359640713039\\
+0.1	5.43586807229906\\
+0.2	6.55274076001859\\
+0.3	8.10451218891997\\
+0.4	10.0983660379236\\
+0.5	12.3846290104908\\
+0.6	14.4124573027303\\
+0.7	15.3477806431186\\
+0.8	14.8222818927247\\
+0.9	13.1758063187443\\
+1	11.1404506648542\\
+1.1	9.18711990568586\\
+1.2	7.50814292224177\\
+1.3	6.11923202923971\\
+1.4	4.96014900439979\\
+1.5	3.91462456081689\\
+1.6	1.95809715554333\\
+1.7	1.92516382676055\\
+1.8	1.89399883817194\\
+1.9	1.865319236596\\
+2	1.83860725852422\\
+2.1	1.8136421972085\\
+2.2	1.79006218476032\\
+2.3	1.76774156285926\\
+2.4	1.74659960414815\\
+2.5	1.72649479528217\\
+2.6	1.70738241042869\\
+2.7	1.68915708244958\\
+2.8	1.67179176380899\\
+2.9	1.65522293937015\\
+3	1.63937185728565\\
+3.5	1.56984598986097\\
+4	1.51329371644467\\
+4.5	1.46655833710599\\
+5	1.42736653486277\\
+5.5	1.39408703795287\\
+6	1.36550743762565\\
+6.5	1.34072050077607\\
+7	1.31902706647321\\
+7.5	1.29989947772253\\
+8	1.2829045668852\\
+};
+\addlegendentry{$\xi_{\mathcal{N}_{\expval{ij}}}^\text{N-SSR}$}
+
+\addplot [color=mycolor3, dashed, line width=1.5pt]
+  table[row sep=crcr]{%
+0	2.35764518107682\\
+0.1	2.39451226296724\\
+0.2	2.468809683121\\
+0.3	2.5880963372743\\
+0.4	2.7442364685334\\
+0.5	2.92698223379372\\
+0.6	3.12116899046867\\
+0.7	3.30747373330583\\
+0.8	3.4672047791275\\
+0.9	3.58107941834332\\
+1	3.63627945202702\\
+1.1	3.62381789181096\\
+1.2	3.54143720924716\\
+1.3	3.39078975284367\\
+1.4	3.17135070045397\\
+1.5	2.85865600079106\\
+1.6	1.81219776494922\\
+1.7	1.79349645412765\\
+1.8	1.77503163996475\\
+1.9	1.75710488233004\\
+2	1.73972588440756\\
+2.1	1.72301227398687\\
+2.2	1.70666725912164\\
+2.3	1.69072893977611\\
+2.4	1.67550035569414\\
+2.5	1.66057083198509\\
+2.6	1.64616940576061\\
+2.7	1.63216174358859\\
+2.8	1.61863821230961\\
+2.9	1.60556869547212\\
+3	1.59288464441994\\
+3.5	1.53565937654688\\
+4	1.48727084959404\\
+4.5	1.4461901433981\\
+5	1.41104404703303\\
+5.5	1.38074779466797\\
+6	1.35442229074915\\
+6.5	1.33137602244961\\
+7	1.31105124122658\\
+7.5	1.29301878657958\\
+8	1.27691140990287\\
+};
+\addlegendentry{$\xi_{\mathcal{N}_{\expval{ij}}}^\text{P-SSR}$}
 
 \end{axis}
 \end{tikzpicture}%

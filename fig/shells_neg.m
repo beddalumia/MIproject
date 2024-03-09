@@ -21,7 +21,7 @@ suff = ["_0_4","_0_5","_0_2","_0_6","_0_3","_0_7"];
 
 for i = 1:length(uloc)
     cd(sprintf('U%d',uloc(i)))
-    for j = 1:length(dist)
+    for j = 1:length(dist)-1
         rdm = read_asci_rdm(sprintf('rDM%s.dat',suff(j)));
         U = uloc(i)
         d = dist(j)
@@ -64,7 +64,7 @@ plot3(ones(size(Uloc)),Uloc,MI,...
 
 hold on
 
-for i = 1:length(dist)
+for i = 1:length(dist)-1
     plot3(ones(size(uloc))*dist(i),uloc/4,data(:,i),...
         '*','MarkerSize',13,'LineWidth',2,...
         'Color',str2rgb('pyplot3'));
@@ -73,7 +73,7 @@ for i = 1:length(dist)
         'Color',str2rgb('pyplot3'));
 end
 
-[X,Y] = meshgrid(uloc/4,dist);
+[X,Y] = meshgrid(uloc/4,dist(1:end-1));
 wplot = waterfall(Y,X,data');
 
 wplot.FaceColor = str2rgb("light khaki");
