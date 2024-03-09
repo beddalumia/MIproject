@@ -101,25 +101,61 @@ function [pE,nE] = build_SSRs()
 end
 
 function E = build_nSSR(RDM)
-      % N-SSR computation, assuming global singlet
-      t = max(RDM(7,7),RDM(10,10));
-      r = min(RDM(7,7),RDM(10,10)) + RDM(4,4) + RDM(13,13);
-      E = 0;
-      if r < t
-         E = E + r * log2(2*r/(r+t)) + t * log2(2*t/(r+t));
+      p = diag(RDM);
+      q = diag(RDM);
+      % N-SSR computation, general formula
+      p(7)  = max(RDM(7,7),RDM(10,10));
+      p(10) = min(RDM(7,7),RDM(10,10));
+      a1 = p(7)+p(10)+p(4)+p(13);
+      b1 = a1^2-(p(4)-p(13))^2;
+      c1 = (p(7)-p(10))*a1;
+      d1 = (p(4)+p(13))^2*(p(7)-p(10))^2+8*p(4)*p(13)*(2*p(4)*p(13)+(p(4)+p(13))*(p(7)-p(10))+2*p(7)*p(10));
+      q(7) = (b1+c1+sqrt(d1))/(4*(a1-p(10)));
+      q(10) = (b1-c1-sqrt(d1))/(4*(a1-p(7)));
+      q(4) = p(4) + (p(7)+p(10)-q(7)-q(10))/2;
+      q(13) = p(13) + (p(7)+p(10)-q(7)-q(10))/2;
+      % Final relative entropy
+      E = 0; %indices = [4,7,10,13];
+      for i=1:length(p)%indices
+         if(p==0)
+            continue
+         end
+         E = E + p(i)*log2(p(i)/q(i));
       end
 end
 
 function E = build_pSSR(RDM)
-   % P-SSR computation, assuming particle-hole symmetry
-   t = max(RDM(7,7),RDM(10,10));
-   r = min(RDM(7,7),RDM(10,10)) + RDM(4,4) + RDM(13,13);
-   T = max(RDM(6,6),RDM(11,11));
-   R = min(RDM(6,6),RDM(11,11)) + RDM(1,1) + RDM(16,16);
-   E = 0;
-   if r < t
-      E = E + r * log2(2*r/(r+t)) + t * log2(2*t/(r+t));
-      E = E + R * log2(2*R/(R+T)) + T * log2(2*T/(R+T));
+   p = diag(RDM);
+   q = diag(RDM);
+   % P-SSR computation, general formula (N-SSR part)
+   p(7)  = max(RDM(7,7),RDM(10,10));
+   p(10) = min(RDM(7,7),RDM(10,10));
+   a1 = p(7)+p(10)+p(4)+p(13);
+   b1 = a1^2-(p(4)-p(13))^2;
+   c1 = (p(7)-p(10))*a1;
+   d1 = (p(4)+p(13))^2*(p(7)-p(10))^2+8*p(4)*p(13)*(2*p(4)*p(13)+(p(4)+p(13))*(p(7)-p(10))+2*p(7)*p(10));
+   q(7) = (b1+c1+sqrt(d1))/(4*(a1-p(10)));
+   q(10) = (b1-c1-sqrt(d1))/(4*(a1-p(7)));
+   q(4) = p(4) + (p(7)+p(10)-q(7)-q(10))/2;
+   q(13) = p(13) + (p(7)+p(10)-q(7)-q(10))/2;
+   % P-SSR computation, general formula (pure P-SSR)
+   p(6)  = max(RDM(6,6),RDM(11,11));
+   p(11) = min(RDM(6,6),RDM(11,11));
+   a2 = p(6)+p(11)+p(1)+p(16);
+   b2 = a2^2-(p(1)-p(16))^2;
+   c2 = (p(6)-p(11))*a2;
+   d2 = (p(1)+p(16))^2*(p(6)-p(11))^2+8*p(1)*p(16)*(2*p(1)*p(16)+(p(1)+p(16))*(p(6)-p(11))+2*p(6)*p(11));
+   q(6) = (b2+c2+sqrt(d2))/(4*(a2-p(11)));
+   q(11) = (b2-c2-sqrt(d2))/(4*(a2-p(6)));
+   q(1) = p(1) + (p(6)+p(11)-q(6)-q(11))/2;
+   q(16) = p(16) + (p(6)+p(11)-q(6)-q(11))/2;
+   % Final relative entropy
+   E = 0; %indices = [4,7,10,13,1,6,11,16];
+   for i=1:length(p)%indices
+      if(p==0)
+         continue
+      end
+      E = E + p(i)*log2(p(i)/q(i));
    end
 end
 
