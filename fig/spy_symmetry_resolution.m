@@ -78,6 +78,14 @@ RDM = QcmP.post.get_Hloc('reduced_density_matrix_2sites.dat');
 figure("name","CDMFT - Symmetries",'Renderer', 'painters', 'Position', [10 10 900 600])
 fancy_spy(F,P,N,kets(idx),bras(idx),idx,[]);
 
+
+[F,idx] = single_site_sectors(RDM);
+[P,idx] = single_site_sectors(pRDM);
+[N,idx] = single_site_sectors(nRDM);
+
+figure("name","CDMFT - SSR",'Renderer', 'painters', 'Position', [10 10 900 600])
+fancy_spy(F,P,N,kets(idx),bras(idx),idx,[5,13]);
+
 % Partial transpose the CDMFT
 pT = partial_transpose(pRDM);
 nT = partial_transpose(nRDM);
@@ -356,6 +364,20 @@ end
 function [PT,new_indices] = partial_transpose(RDM_ij)
 % No Fermi signs, no phases! Just move around elements
     [Nrdm,Mrdm] = size(RDM_ij); assert(Nrdm==Mrdm);
+    ROT = zeros(Nrdm,Mrdm); PT = ROT;
+    % Rotate the RDM_ij to the proper block form
+    [ROT,new_indices] = single_site_sectors(RDM_ij);
+    % Finally, the partial transpose on each "left site" block
+    N_1site = 4;
+    for i = 1:Nrdm/N_1site
+       for j = 1:Nrdm/N_1site
+          block = ROT(1+(i-1)*N_1site:i*N_1site,1+(j-1)*N_1site:j*N_1site);
+          PT(1+(i-1)*N_1site:i*N_1site,1+(j-1)*N_1site:j*N_1site) = block';
+       end
+    end
+end
+function [ROT,new_indices] = single_site_sectors(RDM_ij)
+    [Nrdm,Mrdm] = size(RDM_ij); assert(Nrdm==Mrdm);
     Nlat = 2;
     Norb = 1;
     Nlso = 4; % 2 sites x 2 spin x 1 orbital
@@ -388,14 +410,6 @@ function [PT,new_indices] = partial_transpose(RDM_ij)
              newJ = bin2dec(fliplr(bra))+1;
              % (i,j) ---> (newI,newJ)
              ROT(newI,newJ) = RDM_ij(i,j);
-       end
-    end
-    % Finally, the partial transpose on each "left site" block
-    N_1site = 4;
-    for i = 1:Nrdm/N_1site
-       for j = 1:Nrdm/N_1site
-          block = ROT(1+(i-1)*N_1site:i*N_1site,1+(j-1)*N_1site:j*N_1site);
-          PT(1+(i-1)*N_1site:i*N_1site,1+(j-1)*N_1site:j*N_1site) = block';
        end
     end
 end
