@@ -40,6 +40,13 @@ RDM = G'*G;
 figure("name","Dimer GS - Symmetries",'Renderer', 'painters', 'Position', [10 10 900 600])
 fancy_spy(F,P,N,kets(idx),bras(idx),idx,[]);
 
+[F,idx] = single_site_sectors(RDM);
+[P,idx] = single_site_sectors(pRDM);
+[N,idx] = single_site_sectors(nRDM);
+
+figure("name","Dimer - SSR",'Renderer', 'painters', 'Position', [10 10 900 600])
+fancy_spy(F,P,N,kets(idx),bras(idx),idx,[5,9,13]);
+
 % Partial transpose the Dimer
 pT = partial_transpose(pRDM);
 nT = partial_transpose(nRDM);
@@ -52,11 +59,11 @@ for i = 1:16
         nRDM(tindex(i),tindex(j)) = pT(i,j);
     end
 end
-[F,idx] = symmetrize(RDM);
-[P,idx] = symmetrize(pRDM);
-[N,idx] = symmetrize(nRDM);
+[F,idx] = single_site_sectors(RDM);
+[P,idx] = single_site_sectors(pRDM);
+[N,idx] = single_site_sectors(nRDM);
 figure("name","Dimer GS - Transpose",'Renderer', 'painters', 'Position', [10 10 900 600])
-fancy_spy(F,P,N,kets(idx),bras(idx),idx,[]);
+fancy_spy(F,P,N,kets(idx),bras(idx),idx,[5,9,13]);
 
 [F,idx] = rotate(RDM);
 [P,idx] = rotate(pRDM);
@@ -84,7 +91,7 @@ fancy_spy(F,P,N,kets(idx),bras(idx),idx,[]);
 [N,idx] = single_site_sectors(nRDM);
 
 figure("name","CDMFT - SSR",'Renderer', 'painters', 'Position', [10 10 900 600])
-fancy_spy(F,P,N,kets(idx),bras(idx),idx,[5,13]);
+fancy_spy(F,P,N,kets(idx),bras(idx),idx,[5,9,13]);
 
 % Partial transpose the CDMFT
 pT = partial_transpose(pRDM);
@@ -98,11 +105,11 @@ for i = 1:16
         nRDM(tindex(i),tindex(j)) = pT(i,j);
     end
 end
-[F,idx] = symmetrize(RDM);
-[P,idx] = symmetrize(pRDM);
-[N,idx] = symmetrize(nRDM);
+[F,idx] = single_site_sectors(RDM);
+[P,idx] = single_site_sectors(pRDM);
+[N,idx] = single_site_sectors(nRDM);
 figure("name","CDMFT - Transpose",'Renderer', 'painters', 'Position', [10 10 900 600])
-fancy_spy(F,P,N,kets(idx),bras(idx),idx,[]);
+fancy_spy(F,P,N,kets(idx),bras(idx),idx,[5,9,13]);
 
 [F,idx] = rotate(RDM);
 [P,idx] = rotate(pRDM);
@@ -144,8 +151,8 @@ function fancy_spy(RDM,pRDM,nRDM,kets,bras,indices,blocks)
     % Symmetry Grid (if any)
     for i = 1:16
         if any(i==blocks)
-            xline(i-0.5,'-','Color',str2rgb('bright green'),"Linewidth",1)
-            yline(i-0.5,'-','Color',str2rgb('bright green'),"Linewidth",1)
+            xline(i-0.5,'-','Color',str2rgb('gray'),"Linewidth",1)
+            yline(i-0.5,'-','Color',str2rgb('gray'),"Linewidth",1)
         else
             xline(i-0.5,':')
             yline(i-0.5,':')
@@ -251,27 +258,6 @@ function [bras,kets] = basis_labels()
     end
 end
 function [ROT,new_indices] = rotate(RDM_ij)
-% Rotate the RDM_ij
-% from the |i_up j_up; i_dw j_dw>
-% to the   |i_up i_dw; j_up j_dw>
-% basis (useful for negativity, partial trace, etc)
-% TODO: add fermionic signs!
-% 1       | •  • 〉⊗ | •  • 〉
-% 2       | ↑  • 〉⊗ | •  • 〉
-% 3       | •  ↑ 〉⊗ | •  • 〉
-% 4       | ↑  ↑ 〉⊗ | •  • 〉
-% 5       | •  • 〉⊗ | ↓  • 〉
-% 6       | ↑  • 〉⊗ | ↓  • 〉
-% 7       | •  ↑ 〉⊗ | ↓  • 〉
-% 8       | ↑  ↑ 〉⊗ | ↓  • 〉
-% 9       | •  • 〉⊗ | •  ↓ 〉
-% 10      | ↑  • 〉⊗ | •  ↓ 〉
-% 11      | •  ↑ 〉⊗ | •  ↓ 〉
-% 12      | ↑  ↑ 〉⊗ | •  ↓ 〉
-% 13      | •  • 〉⊗ | ↓  ↓ 〉
-% 14      | ↑  • 〉⊗ | ↓  ↓ 〉
-% 15      | •  ↑ 〉⊗ | ↓  ↓ 〉
-% 16      | ↑  ↑ 〉⊗ | ↓  ↓ 〉
 %
     % SSR-friendly sectors
     i0 = [4,7,10,13];
@@ -287,27 +273,6 @@ function [ROT,new_indices] = rotate(RDM_ij)
 %
 end
 function [ROT,new_indices] = imbalance(RDM_ij)
-% Rotate the RDM_ij
-% from the |i_up j_up; i_dw j_dw>
-% to the   |i_up i_dw; j_up j_dw>
-% basis (useful for negativity, partial trace, etc)
-% TODO: add fermionic signs!
-% 1       | •  • 〉⊗ | •  • 〉
-% 2       | ↑  • 〉⊗ | •  • 〉
-% 3       | •  ↑ 〉⊗ | •  • 〉
-% 4       | ↑  ↑ 〉⊗ | •  • 〉
-% 5       | •  • 〉⊗ | ↓  • 〉
-% 6       | ↑  • 〉⊗ | ↓  • 〉
-% 7       | •  ↑ 〉⊗ | ↓  • 〉
-% 8       | ↑  ↑ 〉⊗ | ↓  • 〉
-% 9       | •  • 〉⊗ | •  ↓ 〉
-% 10      | ↑  • 〉⊗ | •  ↓ 〉
-% 11      | •  ↑ 〉⊗ | •  ↓ 〉
-% 12      | ↑  ↑ 〉⊗ | •  ↓ 〉
-% 13      | •  • 〉⊗ | ↓  ↓ 〉
-% 14      | ↑  • 〉⊗ | ↓  ↓ 〉
-% 15      | •  ↑ 〉⊗ | ↓  ↓ 〉
-% 16      | ↑  ↑ 〉⊗ | ↓  ↓ 〉
 %
     % Fixed-charge imbalance states
     i0 = [1,4,7,10,13,16];
