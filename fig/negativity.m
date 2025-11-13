@@ -1,72 +1,43 @@
-%% Compute imbalance-resolved negativity for a two-orbital RDM in usual EDIPACK ordering
+%% Compute negativity for a two-orbital RDM in usual EDIPACK ordering
 %
-%   >> [N0,N1,N2] = sym_negativity(RDMij)
+%   >> [E,F,N,M] = negativity(RDMij)
 %
-%  © Gabriele Bellomia, 2025
-
-function [N0,N1,N2] = sym_negativity(RDMij)
-    
-% Build charge-imbalance blocks RDM_q (q: charge imbalance)
-
-    % q = 0
-    RDM_0 = zeros(4,4);
-    RDM_0(1,1) = RDMij(4,4);
-    RDM_0(2,3) = RDMij(7,10);
-    RDM_0(3,2) = RDMij(10,7);
-    RDM_0(4,4) = RDMij(13,13);
-    
-    % q = 1
-    % > unimplemented (todo...) 
-    
-    % q = 2
-    RDM_2 = zeros(4,4);
-    RDM_2(1,1) = RDMij(1,1);
-    RDM_2(2,3) = RDMij(6,11);
-    RDM_2(3,2) = RDMij(11,6);
-    RDM_2(4,4) = RDMij(16,16);
-    
-% Build partial transposes (no need to enforce twisted phases under P-SSR)
-    
-    % q = 0
-    RDM_0(1,4) = -RDM_0(2,3); % Fermionic sign in the
-    RDM_0(4,1) = -RDM_0(3,2); % partial transpose! :O
-    RDM_0(3,2) = 0;
-    RDM_0(2,3) = 0;
-    
-    % q = 1 [here we need to take care of twisted phases]
-    % TODO: build this directly instead of using the messy code by Frederic
-
-    
-    % q = 2
-    RDM_2(1,4) = RDM_2(2,3);
-    RDM_2(4,1) = RDM_2(3,2);
-    RDM_2(3,2) = 0;
-    RDM_2(2,3) = 0;
-    
-    % Evaluate transposed spectra...
-    p0 = eig(RDM_0);
-    p2 = eig(RDM_2);
-    % ...and their negativity :)
-    N0 = -sum(p0(p0<0));
-    N1 = NaN; % Unimplemented (TODO)
-    N2 = -sum(p2(p2<0));
-    
-    % > Let's leverage the additivity of negativities!
-    [FT, BT] = partial_transpose(RDMij);
-    Ntot = 0.5*(trace(sqrtm(FT'*FT))-1);
-    Ntot_bosonic = 0.5*(trace(sqrtm(BT'*BT))-1);
-    if abs(Ntot_bosonic - Ntot) < 1e-12
-       warning("You might want to investigate why bosonic and fermionic PPT coincide");
+%      - E: Logarithmic negativity (standard "bosonic" partial transpose)
+%      - F: Logarithmic negativity (twisted fermionic  partial transpose)
+%      - N: "Original negativity"  (standard "bosonic" partial transpose)
+%      - M: "Original negativity"  (twisted fermionic  partial transpose)
+%
+%  © Gabriele, Bellomia and Frederic Bippus, 2025
+function [E,F,N,M] = negativity(RDMij)
+    if sum(sum(imag(RDMij)))>1e-8
+    disp(imag(RDMij))
+    error
     end
-    N1 = Ntot - N2 - N0;
-    
-end
- 
+    % Preprocess the RDM
+    [FiRDM, TiRDM,tindex] = partial_transpose(RDMij);
+    [whatever , T] = partial_transpose_frederic(RDMij);
+    % Get the eigenvalues
+    p = eig(TiRDM);
+    % Test for negativity
+    N = -sum(p(p<0));
+    N_= (trace(sqrtm(TiRDM'*TiRDM))-1)/2;
+    if(abs(N-N_)>1e-8);
+        warning('Negativity definitions mismatch: %g vs %g', N, N_);
+    end
+    p = eig(FiRDM);
+    % Test for twisted vs untwisted negativity
+    M = -sum(p(p<0)) + (trace(FiRDM) - 1)/2;
+    %M_ = (trace(sqrtm(FiRDM'*FiRDM))-1)/2;
+    M_ = (sum(svd(FiRDM))-1)/2;
+        if(abs(M-M_)>1e-8);
+        warning('Negativity definitions (Fermionic) mismatch: %g vs %g', M, M_);
+    end
+    % Measure the entanglement
+    E = log2(2*N+1);
+    F = log2(2*M_+1);
+ end
 
-
-
-
- %% Full partial transpose on the "left" single site
+ %% Partial transpose on the "left" single site
  function [Ti_RDM_ij, Fi_RDM_ij] = partial_transpose_frederic(RDM_ij)
     % HARDCODED MAGIC NUMBERS (we have a simple dimer)
     Nlat = 2;
@@ -81,9 +52,9 @@ end
     %% Rotate the RDM_ij to a comfortable basis: |i_up i_dw j_up j_dw>
     Ti_RDM_ij(1,1) = RDM_ij(1,1);
     Ti_RDM_ij(2,2) = RDM_ij(9,9);
-    Ti_RDM_ij(3,3) = RDM_ij(3,3); 
-    Ti_RDM_ij(4,4) = RDM_ij(5,5); 
-    Ti_RDM_ij(5,5) = RDM_ij(2,2); 
+    Ti_RDM_ij(3,3) = RDM_ij(3,3);
+    Ti_RDM_ij(4,4) = RDM_ij(5,5);
+    Ti_RDM_ij(5,5) = RDM_ij(2,2);
     Ti_RDM_ij(6,6) = RDM_ij(11,11);
     Ti_RDM_ij(7,7) = RDM_ij(13,13);
     Ti_RDM_ij(8,8) = RDM_ij(10,10);
@@ -94,10 +65,10 @@ end
     Ti_RDM_ij(13,13) = RDM_ij(12,12);
     Ti_RDM_ij(14,14) = RDM_ij(14,14);
     Ti_RDM_ij(15,15) = RDM_ij(8,8);
-    Ti_RDM_ij(16,16) = RDM_ij(16,16); 
+    Ti_RDM_ij(16,16) = RDM_ij(16,16);
     %> Off-diagonals with kept sign
     Ti_RDM_ij(5,3) = RDM_ij(2,3);
-    Ti_RDM_ij(3,5) = RDM_ij(3,2);     
+    Ti_RDM_ij(3,5) = RDM_ij(3,2);
     Ti_RDM_ij(4,2) = RDM_ij(5,9);
     Ti_RDM_ij(2,4) = RDM_ij(9,5);
     Ti_RDM_ij(11,9) = RDM_ij(6,7);
@@ -162,5 +133,7 @@ end
         0 0 0 Ti_RDM_ij(9,11) 0 0 0 0 0 0 0 0 0 0 Ti_RDM_ij(15,15) 0;...
         Ti_RDM_ij(11,6) 0 0 0 0 0 Ti_RDM_ij(12,14) 0 0 Ti_RDM_ij(13,15) 0 0 0 0 0 Ti_RDM_ij(16,16)];
  end
+
+
 
  

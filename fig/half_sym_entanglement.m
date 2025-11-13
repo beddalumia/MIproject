@@ -40,7 +40,7 @@ for i = 1:length(u)
    s1(i) = vonNeumann(RDM1{i});
    s2(i) = vonNeumann(RDM2{i});
    s12(i) = vonNeumann(RDM12{i});
-   s14(i) = vonNeumann(RDM14{i});
+  % s14(i) = vonNeumann(RDM14{i});
    z(i) = load('zeta_last_site001.ed');
    cd('..')
 end
@@ -50,15 +50,15 @@ MI =  s1 + s2 - s12;
 print_basis
 
 [pSSR,nSSR] = build_SSRs(RDM12);
-[pSSR_,nSSR_] = build_SSRs(RDM14);
+%[pSSR_,nSSR_] = build_SSRs(RDM14);
 
 [logN,N] = get_negativities(RDM12);
 
 [En,Ed] = symmetry_resolved(RDM12);
-[En_,Ed_] = symmetry_resolved(RDM14);
+%[En_,Ed_] = symmetry_resolved(RDM14);
 
 [N0,N1,N2] = imbalance_negativities(RDM12);
-[N0_,N1_,N2_] = imbalance_negativities(RDM14);
+%[N0_,N1_,N2_] = imbalance_negativities(RDM14);
 
 % N-SSR == En?
 assert(all(abs(nSSR - En)<10^-3))
