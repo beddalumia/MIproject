@@ -1,5 +1,5 @@
 set(0,'defaulttextinterpreter','latex')
-%   addpath ../lib/qcmp-lab/
+addpath ../lib/qcmp-lab/
 
 %% Data wrangling
 
@@ -49,6 +49,8 @@ MI =  s1 + s2 - s12;
 
 print_basis
 
+addpath(HERE)
+
 [pSSR,nSSR] = build_SSRs(RDM12);
 [pSSR_,nSSR_] = build_SSRs(RDM14);
 
@@ -60,16 +62,18 @@ print_basis
 [N0,N1,N2] = imbalance_negativities(RDM12);
 [N0_,N1_,N2_] = imbalance_negativities(RDM14);
 
+rmpath(HERE)
+cd(HERE)
+
 % N-SSR == En?
 assert(all(abs(nSSR - En)<10^-5))
 % P-SSR == N-SSR + Ed?
 assert(all(abs(pSSR - nSSR - Ed)<10^-5))
 
-writematrix(En)
-writematrix(Ed)
-writematrix(mu)
-
-cd(HERE)
+% writematrix(En)
+% writematrix(Ed)
+% writematrix(mu)
+%stop
 
 
 %stop

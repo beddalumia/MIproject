@@ -9,12 +9,6 @@ CODE = fileparts(mfilename('fullpath'));
 DATA = '../../Data/CDMFT/doped/Uloc2.3';
 cd(DATA)
 
-[so_vals, so_dirs] = QcmP.post.get_list('SOI');
-
-Nso = length(so_vals);
-Umat = repmat(0:0.1:15,Nso,1);
-Imat = zeros(size(Umat));
-
 [mu,mudir] = QcmP.post.get_list('xmu')
 
 si = QcmP.post.eentropy_line('xmu','1sites');
