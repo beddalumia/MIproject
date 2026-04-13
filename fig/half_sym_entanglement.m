@@ -27,15 +27,14 @@ z = zeros(size(u));
 for i = 1:length(u)
    cd(udir(i))
     try
-        RDM1{i} = load('reduced_density_matrix_i1l1.dat');
-        RDM2{i} = load('reduced_density_matrix_i2l1.dat');
-        RDM4{i} = load('reduced_density_matrix_i4l1.dat');
+        RDM1{i} = load('reduced_density_matrix_1sites.dat');
+        RDM2{i} = load('reduced_density_matrix_1sites.dat');
         RDM12{i} = QcmP.post.get_Hloc('reduced_density_matrix_i1l1_i2l1.dat');
-        RDM14{i} = QcmP.post.get_Hloc('reduced_density_matrix_i1l1_i4l1.dat');
+        %RDM14{i} = QcmP.post.get_Hloc('reduced_density_matrix_i1l1_i4l1.dat');
     catch
         RDM1{i} = load('reduced_density_matrix_1sites.dat');
         RDM2{i} = load('reduced_density_matrix_1sites.dat');
-        RDM12{i} = QcmP.post.get_Hloc('reduced_density_matrix_2sites.dat');
+        RDM12{i} = load('reduced_density_matrix_i1l1_i2l1.dat');
     end
    s1(i) = vonNeumann(RDM1{i});
    s2(i) = vonNeumann(RDM2{i});
@@ -112,10 +111,11 @@ plot(u(u>0),Ed(u>0),':x','LineWidth',0.5,'Color',str2rgb('strawberry'))
 % Axes
 xlabel("$U/D$")
 ylabel("[bit]")
+ytickformat('%.2f')
 %ylim([0,1.05]);
 legend(["$E^{\uparrow\downarrow}_{\langle ij \rangle}$",...
         "$E^\mathrm{hd}_{\langle ij \rangle}$"],...
-    "Interpreter",'latex','Location','east','Orientation','horizontal')
+    "Interpreter",'latex','Location','north outside','Orientation','horizontal')
 legend('boxoff')
 %rmpath ../lib/qcmp-lab/
 
@@ -129,11 +129,12 @@ plot(u(u>0),log2(2*N2(u>0)+1),':x','LineWidth',0.5,'Color',str2rgb('rose pink'))
 % Axes
 xlabel("$U/D$")
 ylabel("[bit]")
+ytickformat('%.2f')
 %ylim([0,1.05]);
-legend(["$\mathcal{N}^\mathrm{F0}_{\langle ij \rangle}$",...
-        "$\mathcal{N}^\mathrm{F1}_{\langle ij \rangle}$",...
-        "$\mathcal{N}^\mathrm{F2}_{\langle ij \rangle}$"],...
-    "Interpreter",'latex','Location','east','Orientation','horizontal')
+legend(["$\mathcal{N}^{\uparrow\downarrow}_{\langle ij \rangle}$",...
+        "$\mathcal{N}^{\mathrm{F}t}_{\langle ij \rangle}$",...
+        "$\mathcal{N}^\mathrm{hd}_{\langle ij \rangle}$"],...
+    "Interpreter",'latex','Location','north outside','Orientation','horizontal')
 legend('boxoff')
 %rmpath ../lib/qcmp-lab/
 
@@ -152,10 +153,11 @@ plot(u(u>0),logN(u>0),':d','LineWidth',0.5,'Color',str2rgb('lilac'));
 % Axes
 xlabel("$U/D$")
 ylabel("[bit]")
+ytickformat('%.2f')
 %ylim([0,1.05]);
 legend(["$I_{\langle ij \rangle}$",...
         "$\mathcal{N}^\mathrm{F}_{\langle ij \rangle}$"],...
-    "Interpreter",'latex','Location','south','Orientation','horizontal')
+    "Interpreter",'latex','Location','north outside','Orientation','horizontal')
 legend('boxoff')
 ylim([0,max(MI)])
 %rmpath ../lib/qcmp-lab/

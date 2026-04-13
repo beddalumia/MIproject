@@ -29,18 +29,18 @@ for i = 1:length(mu)
     try
         RDM1{i} = load('reduced_density_matrix_i1l1.dat');
         RDM2{i} = load('reduced_density_matrix_i2l1.dat');
-        RDM4{i} = load('reduced_density_matrix_i4l1.dat');
+        %RDM4{i} = load('reduced_density_matrix_i4l1.dat');
         RDM12{i} = QcmP.post.get_Hloc('reduced_density_matrix_i1l1_i2l1.dat');
-        RDM14{i} = QcmP.post.get_Hloc('reduced_density_matrix_i1l1_i4l1.dat');
+        %RDM14{i} = QcmP.post.get_Hloc('reduced_density_matrix_i1l1_i4l1.dat');
     catch
         RDM1{i} = load('reduced_density_matrix_1sites.dat');
         RDM2{i} = load('reduced_density_matrix_1sites.dat');
-        RDM12{i} = QcmP.post.get_Hloc('reduced_density_matrix_2sites.dat');
+        RDM12{i} = load('reduced_density_matrix_i1l1_i2l1.dat');
     end
    s1(i) = vonNeumann(RDM1{i});
    s2(i) = vonNeumann(RDM2{i});
    s12(i) = vonNeumann(RDM12{i});
-   s14(i) = vonNeumann(RDM14{i});
+   %s14(i) = vonNeumann(RDM14{i});
    z(i) = load('zeta_last_site001.ed');
    cd('..')
 end
@@ -52,15 +52,15 @@ print_basis
 addpath(HERE)
 
 [pSSR,nSSR] = build_SSRs(RDM12);
-[pSSR_,nSSR_] = build_SSRs(RDM14);
+%[pSSR_,nSSR_] = build_SSRs(RDM14);
 
 [logN,N] = get_negativities(RDM12);
 
 [En,Ed] = symmetry_resolved(RDM12);
-[En_,Ed_] = symmetry_resolved(RDM14);
+%[En_,Ed_] = symmetry_resolved(RDM14);
 
 [N0,N1,N2] = imbalance_negativities(RDM12);
-[N0_,N1_,N2_] = imbalance_negativities(RDM14);
+%[N0_,N1_,N2_] = imbalance_negativities(RDM14);
 
 rmpath(HERE)
 cd(HERE)
@@ -123,10 +123,11 @@ plot(1-dens,Ed,':x','LineWidth',0.5,'Color',str2rgb('strawberry'))
 % Axes
 xlabel("$\delta = 1-n$")
 ylabel("[bit]")
+ytickformat('%.2f')
 %ylim([0,1.05]);
 legend(["$E^{\uparrow\downarrow}_{\langle ij \rangle}$",...
         "$E^\mathrm{hd}_{\langle ij \rangle}$"],...
-    "Interpreter",'latex','Location','northeast','Orientation','horizontal')
+    "Interpreter",'latex','Location','north outside','Orientation','horizontal')
 legend('boxoff')
 xlim([-0.02,0.4])
 %rmpath ../lib/qcmp-lab/
@@ -141,11 +142,12 @@ plot(1-dens,log2(2*N2+1),':x','LineWidth',0.5,'Color',str2rgb('rose pink'))
 % Axes
 xlabel("$\delta = 1-n$")
 ylabel("[bit]")
+ytickformat('%.2f')
 %ylim([0,1.05]);
-legend(["$\mathcal{N}^\mathrm{F0}_{\langle ij \rangle}$",...
-        "$\mathcal{N}^\mathrm{F1}_{\langle ij \rangle}$",...
-        "$\mathcal{N}^\mathrm{F2}_{\langle ij \rangle}$"],...
-    "Interpreter",'latex','Location','east','Orientation','horizontal')
+legend(["$\mathcal{N}^{\uparrow\downarrow}_{\langle ij \rangle}$",...
+        "$\mathcal{N}^{\mathrm{F}t}_{\langle ij \rangle}$",...
+        "$\mathcal{N}^\mathrm{hd}_{\langle ij \rangle}$"],...
+    "Interpreter",'latex','Location','north outside','Orientation','horizontal')
 legend('boxoff')
 xlim([-0.02,0.4])
 
@@ -164,10 +166,11 @@ plot(1-dens,logN,':d','LineWidth',0.5,'Color',str2rgb('lilac'));
 % Axes
 xlabel("$\delta = 1-n$")
 ylabel("[bit]")
+ytickformat('%.2f')
 %ylim([0,1.05]);
 legend(["$I_{\langle ij \rangle}$",...
         "$\mathcal{N}^\mathrm{F}_{\langle ij \rangle}$"],...
-    "Interpreter",'latex','Location','northeast','Orientation','horizontal')
+    "Interpreter",'latex','Location','north outside','Orientation','horizontal')
 legend('boxoff')
 xlim([-0.02,0.4])
 ylim([0,1])
@@ -209,7 +212,7 @@ function [pE,nE] = build_SSRs(RDMs)
    nE = zeros(size(mold));
 
    for i = 1:length(mold)
-      cd(UDIR(i))
+      cd(UDIR(i));
       [pE(i),nE(i)] = build_SSR(RDMs{i});
       cd('..')
    end
